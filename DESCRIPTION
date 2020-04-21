@@ -1,0 +1,30 @@
+Package: brainClass
+Type: Package
+Title: Transcriptional Data Guided fMRI Network Classification
+Version: 0.1.0
+Author: Mengbo Li
+Maintainer: Mengbo Li <mengbo.li@sydney.edu.au>
+Description: The brainclass R package is a toolkit that performs transcriptional
+    data guided fMRI network classification to link connectome with the brain
+    transcriptome. Via the strategic construction of feature groups which
+    incorporates biologically meaningful gene set information such as biological
+    pathways or gene ontology terms, the brainclass framework links predictive
+    functional connectivity features with the potentially involved biological
+    pathways, to bridge the gap between the functional biomarkers of
+    neurological disorders and their underpinning molecular mechanisms.
+    In addition, we also provide a post-hoc interpretation framework to enable
+    biologically meaningful interpretation for the functional edge selection
+    results by other existing fMRI network classification algorithms. The
+    proposed methods can be easily applied to task-based fMRI data, and the
+    selection of brain parcellation for brain network construction is entirely
+    flexible.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Depends: R (>= 3.6)
+Imports: grpregOverlap, cvTools, stringr, stats
+Suggests: knitr, tidyverse
+biocViews: Software, Classification, GeneExpression, Transcriptomics,
+    NetworkInference, Network, Regression
+VignetteBuilder: knitr
+RoxygenNote: 7.1.0.9000
