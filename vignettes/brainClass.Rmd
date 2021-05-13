@@ -18,6 +18,14 @@ knitr::opts_chunk$set(collapse = TRUE, message = FALSE,
 
 Here we present an example of the \texttt{brainClass} workflow to perform transcriptional-data-guided fMRI network classification and the post-hoc evaluation using the COBRE data set. 
 
+# Install `brainClass`
+
+```{r, eval = FALSE}
+# install.packages("devtools")
+devtools::install_github("Mengbo-Li/brainClass")
+```
+
+
 # Load packages
 
 ```{r}
@@ -32,16 +40,91 @@ library(graphclass)
 data("AHBA_roi_by_gene")
 data("gscv7.0")
 data("digsee")
+data("COBRE.data")
 ```
 
-
-# Transcriptional Data Guided fMRI Network Classification
-
-*Step 1*
+- Gene expression data
 
 ```{r}
-
+class(ahba)
+dim(ahba)
+ahba[1:5, 1:10]
 ```
+
+- COBRE fMRI network data
+
+```{r}
+X_cobre <- COBRE.data$X.cobre
+y_cobre <- COBRE.data$Y.cobre
+colnames(X.cobre) <- getEdgeLabel(nodes = c(1:74, 76:264))
+rownames(X.cobre) <- as.character(1:124)
+Y.cobre[Y.cobre == -1] <- 0
+table(Y.cobre)
+```
+
+- Gene set collections (GSCs) from MSigDB v7.0
+
+Genes are identified by entrez ID. GSCs are unfiltered. 
+
+```{r}
+length(gscv7.0)
+names(gscv7.0)
+length(gscv7.0$kegg)
+gscv7.0$kegg[1:3]
+```
+
+- DiGSeE scores of GSCs for use in the post-hoc evaluation. 
+
+DiGSeE scores of schizophrenia relevance are constructed for each GSC. GSCs are 
+filtered by size. We kept gene sets with at least 5 genes. Further details on 
+how we obtained these scores are available in the Supplementary methods to the 
+manuscript. 
+
+```{r}
+length(digsee)
+names(digsee)
+head(digsee$kegg)
+```
+
+
+
+# `brainClass` network classification
+
+For example, let us use the KEGG pathways to construct gene set expression networks. 
+
+## Obtain gene set edge groups
+
+1) Downsize gene expression data (Optional but recommended)
+
+```{r}
+ahba <- filterGeneExpr(ahba)
+ahba <- ahba[rownames(ahba)[order(as.numeric(rownames(ahba)))], ]
+ahba <- ahba[-which(rownames(ahba) == "75"), ]
+dim(ahba)
+```
+
+2) Get a gene set collection (GSC) of interest and filter by gene set sizes (Optional but recommended)
+
+```{r}
+kegg <- filterGeneSets(geneSetList = gscv7.0$kegg, candidateGenes = colnames(ahba))
+summary(sapply(kegg, length))
+```
+
+If one wishes to keep all gene sets from the GSC, set `min.size` to 0 and `max.size` to Inf. Note that, it is still necessary to filter out genes that do not have gene expression information in the reference transcriptional data set, which is the (filtered) AHBA dataset. 
+
+```{r, eval = FALSE}
+# Not run 
+kegg <- filterGeneSets(geneSetList = gscv7.0$kegg, candidateGenes = colnames(ahba), 
+                       min.size = 0, max.size = Inf)
+```
+
+
+
+3) Get gene set edge groups
+
+
+## Network classification
+
 
 
 # Post-hoc Interpretation
