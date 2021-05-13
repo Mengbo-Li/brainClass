@@ -3,7 +3,7 @@
 #' The `getEdgeLabel` function generates the labels of edges in a network upon
 #' being supplied names of the nodes in the network.
 #'
-#' @param nodes A numeric or character vector, which contains the names of
+#' @param node A numeric or character vector, which contains the names of
 #' all nodes in a network.
 #'
 #' @return A character vector of edge labels for each transcriptional network,
@@ -18,10 +18,10 @@
 #' getEdgeLabel(c(1:74, 76:264))
 #'
 #' @export
-getEdgeLabel <- function(nodes) {
-   id_mat <- paste(rep(as.character(nodes), n = length(nodes)),
-                   rep(as.character(nodes), each = length(nodes)), sep = "-")
-   ids <- matrix(id_mat, nrow = length(nodes), byrow = FALSE)
+getEdgeLabel <- function(node) {
+   id_mat <- paste(rep(as.character(node), n = length(node)),
+                   rep(as.character(node), each = length(node)), sep = "-")
+   ids <- matrix(id_mat, nrow = length(node), byrow = FALSE)
    ids <- ids[upper.tri(ids, diag = FALSE)]
    return(ids)
 }

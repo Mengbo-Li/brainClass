@@ -56,7 +56,7 @@ ahba[1:5, 1:10]
 ```{r}
 X_cobre <- COBRE.data$X.cobre
 y_cobre <- COBRE.data$Y.cobre
-colnames(X.cobre) <- getEdgeLabel(nodes = c(1:74, 76:264))
+colnames(X_cobre) <- getEdgeLabel(nodeLabel = c(1:74, 76:264))
 rownames(X.cobre) <- as.character(1:124)
 Y.cobre[Y.cobre == -1] <- 0
 table(Y.cobre)
