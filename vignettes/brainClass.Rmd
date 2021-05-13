@@ -29,7 +29,9 @@ library(graphclass)
 # Load data
 
 ```{r}
-
+data("AHBA_roi_by_gene")
+data("gscv7.0")
+data("digsee")
 ```
 
 
