@@ -16,9 +16,10 @@
 #' be used as the input of `getGeneSetEdgeGroup`.
 #'
 #' @examples
-#' data(toyData)
-#' getGeneSetExpr(genExpr = toyData$toyGenExpr, GeneSetList =
-#' toyData$exampleGSC)
+#' ## NOT RUN
+#' # data(toyData)
+#' # getGeneSetExpr(genExpr = toyData$toyGenExpr, GeneSetList =
+#' # toyData$exampleGSC)
 #'
 #' @export
 getGeneSetExpr <- function(genExpr, GeneSetList) {

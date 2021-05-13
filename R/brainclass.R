@@ -21,9 +21,10 @@
 #' See grpregOverlap::`grpregOverlap` for details.
 #'
 #' @examples
+#' ## NOT RUN
 #' # Load a toy data set.
-#' data(toyData)
-#' res <- brainclass(X = toyData$X, y = toyData$y, edgeGrp = toyData$grpList)
+#' # data(toyData)
+#' # res <- brainclass(X = toyData$X, y = toyData$y, edgeGrp = toyData$grpList)
 #'
 #' @references
 #' Zeng,Y. and Breheny,P. (2016) Overlapping group logistic regression with

@@ -19,8 +19,8 @@
 #' used in a different repeat of k-fold cross-validation.
 #'
 #' @examples
-#' data(toyData)
-#' getCVfolds(toyData$y, k = 3, repeats = 5, type = "random")
+#' ## NOT RUN
+#' # getCVfolds(toyData$y, k = 3, repeats = 5, type = "random")
 #'
 #' @export
 getCVfolds <- function(y, k = 10, repeats = 50, type = "random"){

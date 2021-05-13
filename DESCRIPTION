@@ -27,4 +27,4 @@ Suggests: knitr, tidyverse
 biocViews: Software, Classification, GeneExpression, Transcriptomics,
     NetworkInference, Network, Regression
 VignetteBuilder: knitr
-RoxygenNote: 7.1.0.9000
+RoxygenNote: 7.1.1

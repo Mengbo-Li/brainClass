@@ -24,23 +24,20 @@
 #' `brainclass` function.
 #'
 #' @examples
-#' data(toyData)
-#' toyGeneSetExpr <- getGeneSetExpr(genExpr = toyData$toyGenExpr, GeneSetList =
-#' toyData$exampleGSC)
-#' toyEdgeLabels <- getEdgeLabel(nodeLabel = rownames(toyData$toyGenExpr))
-#' getGeneSetEdgeGroup(GeneSetExpr = toyGeneSetExpr, informativeCutoff = 0.99,
-#' EdgeLabel = toyEdgeLabels)
+#' ## NOT RUN
+#' # toyGeneSetExpr <- getGeneSetExpr(genExpr = toyData$toyGenExpr, GeneSetList =
+#' # toyData$exampleGSC)
+#' # toyEdgeLabels <- getEdgeLabel(nodeLabel = rownames(toyData$toyGenExpr))
+#' # getGeneSetEdgeGroup(GeneSetExpr = toyGeneSetExpr, informativeCutoff = 0.99,
+#' # EdgeLabel = toyEdgeLabels)
 #'
 #' @export
-getGeneSetEdgeGroup <- function(GeneSetExpr, informativeCutoff = 0.99,
-                                EdgeLabel) {
-    GS_edge_grp <- lapply(GeneSetExpr, function(gs_expr) {
-        gene_expr_net <- abs(stats::cor(t(gs_expr)))
-        gene_expr_netVec <- gene_expr_net[upper.tri(gene_expr_net,diag = FALSE)]
-        gs_specific_edge_grps <- EdgeLabel[gene_expr_netVec >=
-                                            stats::quantile(gene_expr_netVec,
-                                                probs = informativeCutoff)]
-        return(gs_specific_edge_grps)
+getGeneSetEdgeGroup <- function(geneExpr, geneSetList, cutoff = 0.99) {
+    lapply(geneSetList, function(i) {
+        geneSet_expr_network <- abs(stats::cor(t(geneExpr[, i])))
+        network_vector <- geneSet_expr_network[upper.tri(geneSet_expr_network,
+                                                         diag = FALSE)]
+        edgeLabels <- getEdgeLabel(node = rownames(geneExpr))
+        edgeLabels[network_vector >= quantile(network_vector, probs = cutoff)]
     })
-    return(GS_edge_grp)
 }

@@ -10,7 +10,8 @@
 #' @return Downsized gene expression data frame.
 #'
 #' @examples
-#' filterGeneExpr(ahba, q = 0.75)
+#' ## NOT RUN
+#' # filterGeneExpr(ahba, q = 0.75)
 #'
 #' @export
 filterGeneExpr <- function(geneExpr, q = 0.75) {
