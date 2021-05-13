@@ -1,5 +1,5 @@
 ---
-title: 'brainClass: Transcriptional Data Guided fMRI Network Classification'
+title: 'brainClass: Transcriptional-Data-Guided fMRI Network Classification'
 author: "Mengbo Li"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -14,12 +14,24 @@ knitr::opts_chunk$set(collapse = TRUE, message = FALSE,
                         warning = FALSE, comment = "#>")
 ```
 
-# Introduction
+# Overview
+
+Here we present an example of the \texttt{brainClass} workflow to perform transcriptional-data-guided fMRI network classification and the post-hoc evaluation using the COBRE data set. 
+
+# Load packages
 
 ```{r}
 library(tidyverse)
 library(brainClass)
+library(graphclass)
 ```
+
+# Load data
+
+```{r}
+
+```
+
 
 # Transcriptional Data Guided fMRI Network Classification
 

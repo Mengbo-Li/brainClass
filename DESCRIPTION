@@ -5,7 +5,7 @@ Version: 0.1.0
 Author: Mengbo Li
 Maintainer: Mengbo Li <mengbo.li@sydney.edu.au>
 Description: The brainclass R package is a toolkit that performs transcriptional
-    data guided fMRI network classification to link connectome with the brain
+    -data-guided fMRI network classification to link connectome with the brain
     transcriptome. Via the strategic construction of feature groups which
     incorporates biologically meaningful gene set information such as biological
     pathways or gene ontology terms, the brainclass framework links predictive
