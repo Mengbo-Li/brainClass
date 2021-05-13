@@ -13,8 +13,8 @@
 #' }
 #'
 #' @usage
-#' data(ahba, package = "brainClass")
+#' data("AHBA_roi_by_gene", package = "brainClass")
 #'
 #' @examples
-#' data(ahba, package = "brainClass")
+#' data("AHBA_roi_by_gene", package = "brainClass")
 "AHBA_roi_by_gene"

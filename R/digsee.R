@@ -1,0 +1,23 @@
+#' Processed DiGSeE scores of relevance to schizophrenia of each gene set
+#' signature
+#'
+#' Summarised schizophrenia relevance score of each gene set from the genewise
+#' scores downloaded from DiGSeE database. Scores were log-transformed.
+#'
+#' @docType data
+#'
+#' @format A list object.
+#' \describe{
+#' \item{digsee}{A list object of data frames with summarised DiGSeE
+#' schizophrenia relevance scores for different gene set collections.
+#' Each data frame contains three columns. `prop` means the proportion of
+#' genes with an effective DiGSeE score. `sumScore` is the sum of all scores;
+#' and `avgScore` stores the mean score of each gene set. }
+#' }
+#'
+#' @usage
+#' data("digsee", package = "brainClass")
+#'
+#' @examples
+#' data("digsee", package = "brainClass")
+"digsee"
