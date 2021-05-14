@@ -3,6 +3,7 @@ news
 reference
 404.html
 authors.html
+_config.yml
 *.yml
 *.css
 *js
