@@ -1,5 +1,5 @@
 ---
-title: 'Getting started: brainClass'
+title: 'brainClass: Transcriptional-data-guided brain network classification'
 author: "Mengbo Li"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -30,7 +30,7 @@ knitr::opts_chunk$set(collapse = TRUE,
 
 # Overview
 
-Here we present an example of the \texttt{brainClass} workflow to perform transcriptional-data-guided fMRI network classification and the post-hoc evaluation using the COBRE data set. 
+Here we present an example of the *brainClass* workflow to perform transcriptional-data-guided fMRI network classification and the post-hoc evaluation using the COBRE data set. 
 
 # Install `brainClass`
 
