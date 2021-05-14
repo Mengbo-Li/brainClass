@@ -22,4 +22,9 @@ regions of interest (ROIs) defined by Power parcellation.
 \examples{
 data("ahba", package = "brainClass")
 }
+\references{
+Hawrylycz, M. J., Lein, E. S., Guillozet-Bongaarts, A. L., Shen, E. H., Ng,
+L., Miller, J. A., ... & Jones, A. R. (2012). An anatomically comprehensive
+atlas of the adult human brain transcriptome. *Nature*, 489(7416), 391-399.
+}
 \keyword{datasets}

@@ -25,4 +25,9 @@ scores downloaded from DiGSeE database. Scores were log-transformed.
 \examples{
 data("digsee", package = "brainClass")
 }
+\references{
+Kim, J., So, S., Lee, H. J., Park, J. C., Kim, J. J., & Lee, H. (2013).
+DigSee: disease gene search engine with evidence sentences (version cancer).
+*Nucleic acids research*, 41(W1), W510-W517.
+}
 \keyword{datasets}

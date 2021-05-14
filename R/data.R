@@ -15,6 +15,11 @@
 #' @usage
 #' data("ahba", package = "brainClass")
 #'
+#' @references
+#' Hawrylycz, M. J., Lein, E. S., Guillozet-Bongaarts, A. L., Shen, E. H., Ng,
+#' L., Miller, J. A., ... & Jones, A. R. (2012). An anatomically comprehensive
+#' atlas of the adult human brain transcriptome. *Nature*, 489(7416), 391-399.
+#'
 #' @examples
 #' data("ahba", package = "brainClass")
 "ahba"
@@ -38,6 +43,11 @@
 #'
 #' @usage
 #' data("gscv7.0", package = "brainClass")
+#'
+#' @references
+#' Liberzon, A., Subramanian, A., Pinchback, R., Thorvaldsdóttir, H., Tamayo,
+#' P., & Mesirov, J. P. (2011). Molecular signatures database (MSigDB) 3.0.
+#' *Bioinformatics*, 27(12), 1739-1740.
 #'
 #' @examples
 #' data("gscv7.0", package = "brainClass")
@@ -63,6 +73,11 @@
 #'
 #' @usage
 #' data("digsee", package = "brainClass")
+#'
+#' @references
+#' Kim, J., So, S., Lee, H. J., Park, J. C., Kim, J. J., & Lee, H. (2013).
+#' DigSee: disease gene search engine with evidence sentences (version cancer).
+#' *Nucleic acids research*, 41(W1), W510-W517.
 #'
 #' @examples
 #' data("digsee", package = "brainClass")

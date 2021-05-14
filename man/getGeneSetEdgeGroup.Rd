@@ -4,7 +4,7 @@
 \alias{getGeneSetEdgeGroup}
 \title{Construct gene set edge groups given gene set collection information}
 \usage{
-getGeneSetEdgeGroup(GeneSetExpr, informativeCutoff = 0.99, EdgeLabel)
+getGeneSetEdgeGroup(geneExpr, geneSetList, cutoff = 0.99)
 }
 \arguments{
 \item{GeneSetExpr}{A list of transcriptional data matrices, each

@@ -1,0 +1,327 @@
+---
+title: 'brainClass: Transcriptional-Data-Guided fMRI Network Classification'
+author: "Mengbo Li"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+    %\VignetteEngine{knitr::knitr}
+    %\VignetteIndexEntry{Getting started: brainClass}
+    %\usepackage[UTF-8]{inputenc}
+    %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+options(width = 100, digits = 3)
+knitr::opts_chunk$set(collapse = TRUE, 
+                      comment = "#>", 
+                      echo = TRUE, 
+                      cache = FALSE, 
+                      prompt = FALSE,
+                      tidy = TRUE,
+                      comment = NA, 
+                      message = FALSE, 
+                      warning = FALSE, 
+                      tidy = TRUE, 
+                      tidy.opts = list(width.cutoff = 60),
+                      fig.width = 7, 
+                      fig.height = 5, 
+                      dev = "png")
+```
+
+# Overview
+
+Here we present an example of the \texttt{brainClass} workflow to perform transcriptional-data-guided fMRI network classification and the post-hoc evaluation using the COBRE data set. 
+
+# Install `brainClass`
+
+```{r, eval = FALSE}
+# install.packages("devtools")
+devtools::install_github("Mengbo-Li/brainClass")
+```
+
+
+# Load packages
+
+```{r}
+library(tidyverse)
+library(brainClass)
+library(graphclass)
+```
+
+# Load data
+
+```{r}
+data("ahba")
+data("gscv7.0")
+data("digsee")
+data("COBRE.data")
+```
+
+- Gene expression data
+
+```{r}
+class(ahba)
+dim(ahba)
+ahba[1:5, 1:10]
+```
+
+- COBRE fMRI network data
+
+```{r}
+X_cobre <- COBRE.data$X.cobre
+y_cobre <- COBRE.data$Y.cobre
+colnames(X_cobre) <- getEdgeLabel(node = c(1:74, 76:264))
+rownames(X_cobre) <- as.character(1:124)
+y_cobre[y_cobre == -1] <- 0
+table(y_cobre)
+```
+
+- Gene set collections (GSCs) from MSigDB v7.0
+
+Genes are identified by entrez ID. GSCs are unfiltered. 
+
+```{r}
+length(gscv7.0)
+names(gscv7.0)
+length(gscv7.0$kegg)
+gscv7.0$kegg[1:3]
+```
+
+- DiGSeE scores of GSCs for use in the post-hoc evaluation. 
+
+DiGSeE scores of schizophrenia relevance are constructed for each GSC. GSCs are 
+filtered by size. We kept gene sets with at least 5 genes. Further details on 
+how we obtained these scores are available in the Supplementary methods to the 
+manuscript. 
+
+```{r}
+length(digsee)
+names(digsee)
+head(digsee$kegg)
+```
+
+
+
+# `brainClass` network classification
+
+For example, let us use the KEGG pathways to construct gene set expression networks. 
+
+## Obtain gene set edge groups
+
+1) Downsize gene expression data (Optional but recommended)
+
+```{r}
+ahba <- filterGeneExpr(ahba)
+ahba <- ahba[rownames(ahba)[order(as.numeric(rownames(ahba)))], ]
+ahba <- ahba[-which(rownames(ahba) == "75"), ]
+dim(ahba)
+```
+
+2) Get a gene set collection (GSC) of interest and filter by gene set sizes 
+
+The filtering on GSC by gene set sizes is optional by recommended. 
+
+```{r}
+kegg <- filterGeneSets(geneSetList = gscv7.0$kegg, candidateGenes = colnames(ahba), 
+                       min.size = 5, max.size = Inf)
+summary(sapply(kegg, length))
+```
+
+If one wishes to keep all gene sets from the GSC, set `min.size` to 2 and `max.size` to Inf. The `min.size` parameter cannot be smaller than 2 in order to calculate correlations. Note that, it is still necessary to filter out genes that do not have gene expression information in the reference transcriptional data set, which is the (filtered) AHBA dataset. 
+
+```{r, eval = FALSE}
+# Not run 
+kegg <- filterGeneSets(geneSetList = gscv7.0$kegg, candidateGenes = colnames(ahba), 
+                       min.size = 2, max.size = Inf)
+```
+
+
+3) Get gene set edge groups
+
+```{r}
+keggEdgeGrp <- getGeneSetEdgeGroup(geneExpr = ahba, geneSetList = kegg, cutoff = 0.99)
+```
+
+
+## Network classification and prediction
+
+Take one fold from one repeat of 10-fold cross validation as an example: 
+
+```{r}
+edgesToClassify <- unlist(keggEdgeGrp)
+X_cobre_filterd <- X_cobre[, edgesToClassify[!duplicated(edgesToClassify)]]
+
+set.seed(10)
+cvfolds <- getCVfolds(y_cobre, k = 10, repeats = 1)
+trainid <- cvfolds[[1]] %>% filter(k != 1)
+fit <- brainclass(X = X_cobre_filterd[trainid$Ind, ], y = y_cobre[trainid$Ind], edgeGrp = keggEdgeGrp)
+```
+
+Prediction on the test set
+
+```{r}
+testid <- cvfolds[[1]] %>% filter(k == 1)
+test <- predict(fit, X = X_cobre_filterd[testid$Ind, ], type = "class")
+table(test, y_cobre[testid$Ind])
+```
+
+
+
+# Post-hoc Interpretation
+
+## Example 1
+
+First, as an example, we evaluate the edge selection results by *glmnet::glmnet* applied on the COBRE data set by differnt metrics with KEGG pathways. 
+
+(1) Edge selection results by *glmnet*
+
+Obtain the edge labels of selected features, that is, edges with a non-zero fitted coefficient. 
+
+```{r}
+# install.package("glmnet")
+library(glmnet)
+
+cvfit <- cv.glmnet(X_cobre, y_cobre, family = "binomial", nfolds = 10)
+selectedEdges <- coef(cvfit, s = "lambda.min")
+selectedEdges <- names(selectedEdges[selectedEdges@i + 1, ])[-1]
+length(selectedEdges)
+```
+
+(2) Obtain edgewise metrics
+
+Evaluate by KEGG pathways: 
+
+```{r}
+metrics <- posthoc.edge(selected.edgeLabels = selectedEdges, 
+                        all.edgeLabels = colnames(X_cobre), 
+                        geneSetList = kegg, 
+                        geneExpr = ahba, 
+                        iter = 100)
+DT::datatable(signif(metrics, 2))
+```
+
+(3) Association with prior knowledge - the DiGSeE database
+
+Get "truth" - KEGG pathways with a top 5% in both average and sum DiGSeE scores are assumed to be associated with schizophrenia. 
+
+```{r}
+metrics <- merge(metrics, digsee[["kegg"]], by = 0) %>% 
+   mutate(truth = ((avgScore >= quantile(avgScore, 0.95)) + (sumScore >= quantile(sumScore, 0.95)) > 0) + 0)
+table(metrics$truth)
+metrics$Row.names[metrics$truth == 1]
+```
+
+
+Generate the receiver operating characteristic (ROC) curve for each metric: 
+
+```{r}
+rocs <- getROC(truth = metrics$truth, test.metric = metrics$Jaccard, step.size = 0.01)
+
+ggplot(rocs, aes(x = fpr, y = tpr)) + 
+  geom_line() + 
+  geom_abline(slope = 1, intercept = 0, color = "darkred", linetype = 2) + 
+  labs(x = "FPR", y = "TPR") + 
+  theme_minimal()
+```
+
+Also, calculate the area under this ROC curve (AUC):
+
+```{r}
+DescTools::AUC(rocs$fpr, rocs$tpr)
+```
+
+Notice that, with p-valued metrics, signigicance is indicated by smaller values. We thereby need the "one-minus" transformation when calcuating the ROC curve: 
+
+```{r}
+rocs <- getROC(truth = metrics$truth, test.metric = 1-metrics$Jaccard.PValue, step.size = 0.01)
+
+ggplot(rocs, aes(x = fpr, y = tpr)) + 
+  geom_line() + 
+  geom_abline(slope = 1, intercept = 0, color = "darkred", linetype = 2) + 
+  labs(x = "FPR", y = "TPR") + 
+  theme_minimal()
+
+DescTools::AUC(rocs$fpr, rocs$tpr)
+```
+
+
+
+## Example 2
+
+Next, we evaluate the same selected edges by *glmnet" with the Jaccard index by different GSCs (say, KEGG, REACTOME, transcription factor targets and positional). 
+
+```{r}
+gscs <- c("kegg", "reactome", "position", "tft")
+rocs <- lapply(gscs, function(ind) {
+   # filter the gene sets by size
+   gsc_i <- filterGeneSets(geneSetList = gscv7.0[[ind]], 
+                           candidateGenes = colnames(ahba), 
+                           min.size = 5, 
+                           max.size = Inf)
+   # obtain Jaccard indices
+   res <- posthoc.edge(selected.edgeLabels = selectedEdges, 
+                       all.edgeLabels = colnames(X_cobre), 
+                       geneSetList = gsc_i, 
+                       geneExpr = ahba, 
+                       get.jaccard = TRUE, 
+                       get.betweenness = FALSE, 
+                       iter = 100)
+   # get roc
+   res <- merge(res, digsee[[ind]], by = 0) %>% 
+      mutate(truth = ((avgScore >= quantile(avgScore, 0.95)) + (sumScore >= quantile(sumScore, 0.95)) > 0) + 0)
+   roc <- getROC(truth = res$truth, test.metric = res$Jaccard, step.size = 0.01)
+   
+   roc$gsc <- ind
+   return(roc)
+}) %>% do.call(rbind, .)
+```
+
+Visualisation: 
+
+```{r}
+ggplot(rocs, aes(x = fpr, y = tpr, color = gsc)) + 
+   geom_line() + 
+   geom_abline(slope = 1, intercept = 0, color = "darkred", linetype = 2) + 
+   labs(x = "FPR", y = "TPR", color = "GSC") + 
+   ggtitle("ROC curves by Jaccard Index") + 
+   theme_minimal()
+```
+
+AUCs:
+
+```{r}
+group_by(rocs, gsc) %>% 
+   summarise(auc = DescTools::AUC(fpr, tpr))
+```
+
+
+
+
+
+# References
+
+Aine, C. J., Bockholt, H. J., Bustillo, J. R., Cañive, J. M., Caprihan, A., Gasparovic, C., ... & Calhoun, V. D. (2017). Multimodal neuroimaging in schizophrenia: description and dissemination. *Neuroinformatics*, 15(4), 343-364.
+
+Hawrylycz, M. J., Lein, E. S., Guillozet-Bongaarts, A. L., Shen, E. H., Ng, L., Miller, J. A., ... & Jones, A. R. (2012). An anatomically comprehensive atlas of the adult human brain transcriptome. *Nature*, 489(7416), 391-399.
+
+Kim, J., So, S., Lee, H. J., Park, J. C., Kim, J. J., & Lee, H. (2013). DigSee: disease gene search engine with evidence sentences (version cancer). *Nucleic acids research*, 41(W1), W510-W517.
+
+Li, M., Kessler, D., Arroyo, J., Freytag, S., Bahlo, M., Levina, E., & Yang, J. Y. H. (2020). Guiding and interpreting brain network classification with transcriptional data. *bioRxiv*.
+
+Liberzon, A., Subramanian, A., Pinchback, R., Thorvaldsdóttir, H., Tamayo, P., & Mesirov, J. P. (2011). Molecular signatures database (MSigDB) 3.0. *Bioinformatics*, 27(12), 1739-1740.
+
+Power, J. D., Cohen, A. L., Nelson, S. M., Wig, G. S., Barnes, K. A., Church, J. A., ... & Petersen, S. E. (2011). Functional network organization of the human brain. *Neuron*, 72(4), 665-678.
+
+Relión, J. D. A., Kessler, D., Levina, E., & Taylor, S. F. (2019). Network classification with applications to brain connectomics. *The annals of applied statistics*, 13(3), 1648. 
+
+Friedman, J., Hastie, T., & Tibshirani, R. (2010). Regularization paths for generalized linear models via coordinate descent. *Journal of statistical software*, 33(1), 1.
+
+
+
+
+# Session Information
+
+```{r}
+sessionInfo()
+```
+

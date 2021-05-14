@@ -12,7 +12,8 @@ filterGeneSets(geneSetList, candidateGenes, min.size = 25, max.size = 500)
 
 \item{candidateGenes}{A character vector of all genes to be considered.}
 
-\item{min.size}{Minimum number of genes to keep a gene set.}
+\item{min.size}{Minimum number of genes to keep a gene set. Cannot be smaller
+than 2.}
 
 \item{max.size}{Maximum number of genes to keep a gene set.}
 }

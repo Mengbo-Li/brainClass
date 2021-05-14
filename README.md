@@ -1,6 +1,6 @@
 # *brainClass*: Transcriptional-data-guided brain network classification 
 
-Transcriptional-data-guided brain network classification that links the brain connectome to the transcriptome. Processed example data included. See https://www.biorxiv.org/content/10.1101/2020.05.15.099028v1 for details. 
+Transcriptional-data-guided brain network classification that links the brain connectome to the brain transcriptome. Processed example data included. See https://www.biorxiv.org/content/10.1101/2020.05.15.099028v1 for details. 
 
 ## Installation 
 
@@ -19,18 +19,26 @@ The whole brain gene expression data are publicly available from the Allen Human
 
 Data references:
 
-Aine, C. J., et al. Multimodal neuroimaging in schizophrenia: description and dissemination. *Neuroinformatics* 15.4 (2017): 343-364.
+Aine, C. J., Bockholt, H. J., Bustillo, J. R., Cañive, J. M., Caprihan, A., Gasparovic, C., ... & Calhoun, V. D. (2017). Multimodal neuroimaging in schizophrenia: description and dissemination. *Neuroinformatics*, 15(4), 343-364.
 
-Arroyo Relión, J.D., Kessler, D., Levina, E., Taylor, S.F., Network classification with applications to brain connectomics. *Ann. Appl. Stat.* 13 (2019), no. 3, 1648--1677
+Hawrylycz, M. J., Lein, E. S., Guillozet-Bongaarts, A. L., Shen, E. H., Ng, L., Miller, J. A., ... & Jones, A. R. (2012). An anatomically comprehensive atlas of the adult human brain transcriptome. *Nature*, 489(7416), 391-399.
 
-Hawrylycz, Michael J et al. (2012). An anatomically comprehensive atlas of the adult human brain transcriptome. *Nature* 489.7416, pp. 391–399.
+Kim, J., So, S., Lee, H. J., Park, J. C., Kim, J. J., & Lee, H. (2013). DigSee: disease gene search engine with evidence sentences (version cancer). *Nucleic acids research*, 41(W1), W510-W517.
 
-Power, Jonathan D et al. (2011). Functional network organization of the human brain. *Neuron* 72.4, pp. 665–678.
+Liberzon, A., Subramanian, A., Pinchback, R., Thorvaldsdóttir, H., Tamayo, P., & Mesirov, J. P. (2011). Molecular signatures database (MSigDB) 3.0. *Bioinformatics*, 27(12), 1739-1740.
+
+Power, J. D., Cohen, A. L., Nelson, S. M., Wig, G. S., Barnes, K. A., Church, J. A., ... & Petersen, S. E. (2011). Functional network organization of the human brain. *Neuron*, 72(4), 665-678.
+
+Relión, J. D. A., Kessler, D., Levina, E., & Taylor, S. F. (2019). Network classification with applications to brain connectomics. *The annals of applied statistics*, 13(3), 1648. 
+
 
 ## Penalised group lasso algorithms
 
-The *brainClass* package used the **grpregOverlap::grpregOverlap** algorithm for penalised logistic regression with (user-defined) overlapping feature (covariate) groups. The GitHub page of the *grpregOverlap* package is [**here**](https://github.com/YaohuiZeng/grpregOverlap). 
+The *brainClass* package uses the **grpregOverlap::grpregOverlap** algorithm for penalised logistic regression with (user-defined) overlapping feature (covariate) groups. The GitHub page of the *grpregOverlap* package is [**here**](https://github.com/YaohuiZeng/grpregOverlap). 
 
+## Analysis pipeline
+
+See [**vignettes**]() for the standard workflow with *brainClass*. 
 
 ## Contact
 
