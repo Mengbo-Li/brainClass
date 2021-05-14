@@ -19,3 +19,4 @@
 ^appveyor\.yml$
 ^\.github$
 ^fake-index.html$
+docs
