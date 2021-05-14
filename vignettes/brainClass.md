@@ -1,5 +1,5 @@
 ---
-title: 'brainClass: Transcriptional-Data-Guided fMRI Network Classification'
+title: 'Getting started: brainClass'
 author: "Mengbo Li"
 date: "2021-05-14"
 output: rmarkdown::html_vignette
