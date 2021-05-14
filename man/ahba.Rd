@@ -8,7 +8,7 @@
 A data frame object.
 \describe{
 \item{ahba}{A data frame containing the gene expression information of ROIS
-defined by the Power parceallation. The data frame is organised with gene
+defined by the Power parcellation. The data frame is organised with gene
 (entrez IDs) on the columns and ROI on the rows. }
 }
 }
@@ -25,6 +25,10 @@ data("ahba", package = "brainClass")
 \references{
 Hawrylycz, M. J., Lein, E. S., Guillozet-Bongaarts, A. L., Shen, E. H., Ng,
 L., Miller, J. A., ... & Jones, A. R. (2012). An anatomically comprehensive
-atlas of the adult human brain transcriptome. *Nature*, 489(7416), 391-399.
+atlas of the adult human brain transcriptome. \emph{Nature}, 489(7416), 391-399.
+
+Power, J. D., Cohen, A. L., Nelson, S. M., Wig, G. S., Barnes, K. A., Church,
+J. A., ... & Petersen, S. E. (2011). Functional network organization of the
+human brain. \emph{Neuron}, 72(4), 665-678.
 }
 \keyword{datasets}

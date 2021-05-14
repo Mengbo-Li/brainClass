@@ -8,7 +8,7 @@
 #' @format A data frame object.
 #' \describe{
 #' \item{ahba}{A data frame containing the gene expression information of ROIS
-#' defined by the Power parceallation. The data frame is organised with gene
+#' defined by the Power parcellation. The data frame is organised with gene
 #' (entrez IDs) on the columns and ROI on the rows. }
 #' }
 #'
@@ -18,7 +18,12 @@
 #' @references
 #' Hawrylycz, M. J., Lein, E. S., Guillozet-Bongaarts, A. L., Shen, E. H., Ng,
 #' L., Miller, J. A., ... & Jones, A. R. (2012). An anatomically comprehensive
-#' atlas of the adult human brain transcriptome. *Nature*, 489(7416), 391-399.
+#' atlas of the adult human brain transcriptome. \emph{Nature}, 489(7416), 391-399.
+#'
+#' @references
+#' Power, J. D., Cohen, A. L., Nelson, S. M., Wig, G. S., Barnes, K. A., Church,
+#' J. A., ... & Petersen, S. E. (2011). Functional network organization of the
+#' human brain. \emph{Neuron}, 72(4), 665-678.
 #'
 #' @examples
 #' data("ahba", package = "brainClass")
@@ -47,7 +52,7 @@
 #' @references
 #' Liberzon, A., Subramanian, A., Pinchback, R., Thorvaldsdóttir, H., Tamayo,
 #' P., & Mesirov, J. P. (2011). Molecular signatures database (MSigDB) 3.0.
-#' *Bioinformatics*, 27(12), 1739-1740.
+#' \emph{Bioinformatics}, 27(12), 1739-1740.
 #'
 #' @examples
 #' data("gscv7.0", package = "brainClass")
@@ -58,7 +63,9 @@
 #' signature
 #'
 #' Summarised schizophrenia relevance score of each gene set from the genewise
-#' scores downloaded from DiGSeE database. Scores were log-transformed.
+#' scores downloaded from DiGSeE database. Scores were log-transformed. Details
+#' on the processing of raw scores are available in the Supplementary Methods in
+#' the reference.
 #'
 #' @docType data
 #'
@@ -77,7 +84,12 @@
 #' @references
 #' Kim, J., So, S., Lee, H. J., Park, J. C., Kim, J. J., & Lee, H. (2013).
 #' DigSee: disease gene search engine with evidence sentences (version cancer).
-#' *Nucleic acids research*, 41(W1), W510-W517.
+#' \emph{Nucleic acids research}, 41(W1), W510-W517.
+#'
+#' Li, M., Kessler, D., Arroyo, J., Freytag, S., Bahlo, M., Levina, E., & Yang,
+#' J. Y. H. (2020). Guiding and interpreting brain network classification with
+#' transcriptional data. \emph{bioRxiv}.
+#'
 #'
 #' @examples
 #' data("digsee", package = "brainClass")

@@ -28,6 +28,6 @@ data("gscv7.0", package = "brainClass")
 \references{
 Liberzon, A., Subramanian, A., Pinchback, R., Thorvaldsdóttir, H., Tamayo,
 P., & Mesirov, J. P. (2011). Molecular signatures database (MSigDB) 3.0.
-*Bioinformatics*, 27(12), 1739-1740.
+\emph{Bioinformatics}, 27(12), 1739-1740.
 }
 \keyword{datasets}

@@ -153,19 +153,19 @@ Take one fold from one repeat of 10-fold cross validation as an example:
 
 ```{r}
 edgesToClassify <- unlist(keggEdgeGrp)
-X_cobre_filterd <- X_cobre[, edgesToClassify[!duplicated(edgesToClassify)]]
+edgesToClassify <- edgesToClassify[!duplicated(edgesToClassify)]
 
 set.seed(10)
 cvfolds <- getCVfolds(y_cobre, k = 10, repeats = 1)
 trainid <- cvfolds[[1]] %>% filter(k != 1)
-fit <- brainclass(X = X_cobre_filterd[trainid$Ind, ], y = y_cobre[trainid$Ind], edgeGrp = keggEdgeGrp)
+fit <- brainclass(X = X_cobre[trainid$Ind, edgesToClassify], y = y_cobre[trainid$Ind], edgeGrp = keggEdgeGrp)
 ```
 
 Prediction on the test set
 
 ```{r}
 testid <- cvfolds[[1]] %>% filter(k == 1)
-test <- predict(fit, X = X_cobre_filterd[testid$Ind, ], type = "class")
+test <- predict(fit, X = X_cobre[testid$Ind, edgesToClassify], type = "class")
 table(test, y_cobre[testid$Ind])
 ```
 
@@ -306,6 +306,8 @@ group_by(rocs, gsc) %>%
 
 Aine, C. J., Bockholt, H. J., Bustillo, J. R., Cañive, J. M., Caprihan, A., Gasparovic, C., ... & Calhoun, V. D. (2017). Multimodal neuroimaging in schizophrenia: description and dissemination. *Neuroinformatics*, 15(4), 343-364.
 
+Friedman, J., Hastie, T., & Tibshirani, R. (2010). Regularization paths for generalized linear models via coordinate descent. *Journal of statistical software*, 33(1), 1.
+
 Hawrylycz, M. J., Lein, E. S., Guillozet-Bongaarts, A. L., Shen, E. H., Ng, L., Miller, J. A., ... & Jones, A. R. (2012). An anatomically comprehensive atlas of the adult human brain transcriptome. *Nature*, 489(7416), 391-399.
 
 Kim, J., So, S., Lee, H. J., Park, J. C., Kim, J. J., & Lee, H. (2013). DigSee: disease gene search engine with evidence sentences (version cancer). *Nucleic acids research*, 41(W1), W510-W517.
@@ -318,7 +320,7 @@ Power, J. D., Cohen, A. L., Nelson, S. M., Wig, G. S., Barnes, K. A., Church, J.
 
 Relión, J. D. A., Kessler, D., Levina, E., & Taylor, S. F. (2019). Network classification with applications to brain connectomics. *The annals of applied statistics*, 13(3), 1648. 
 
-Friedman, J., Hastie, T., & Tibshirani, R. (2010). Regularization paths for generalized linear models via coordinate descent. *Journal of statistical software*, 33(1), 1.
+Zeng, Y., & Breheny, P. (2016). Overlapping group logistic regression with applications to genetic pathway selection. *Cancer informatics*, 15, CIN-S40043.
 
 
 

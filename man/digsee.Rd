@@ -20,7 +20,9 @@ data("digsee", package = "brainClass")
 }
 \description{
 Summarised schizophrenia relevance score of each gene set from the genewise
-scores downloaded from DiGSeE database. Scores were log-transformed.
+scores downloaded from DiGSeE database. Scores were log-transformed. Details
+on the processing of raw scores are available in the Supplementary Methods in
+the reference.
 }
 \examples{
 data("digsee", package = "brainClass")
@@ -28,6 +30,10 @@ data("digsee", package = "brainClass")
 \references{
 Kim, J., So, S., Lee, H. J., Park, J. C., Kim, J. J., & Lee, H. (2013).
 DigSee: disease gene search engine with evidence sentences (version cancer).
-*Nucleic acids research*, 41(W1), W510-W517.
+\emph{Nucleic acids research}, 41(W1), W510-W517.
+
+Li, M., Kessler, D., Arroyo, J., Freytag, S., Bahlo, M., Levina, E., & Yang,
+J. Y. H. (2020). Guiding and interpreting brain network classification with
+transcriptional data. \emph{bioRxiv}.
 }
 \keyword{datasets}
