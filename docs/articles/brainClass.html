@@ -234,23 +234,24 @@
 <p>Take one fold from one repeat of 10-fold cross validation as an example:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">edgesToClassify</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">keggEdgeGrp</span><span class="op">)</span>
-<span class="va">X_cobre_filterd</span> <span class="op">&lt;-</span> <span class="va">X_cobre</span><span class="op">[</span>, <span class="va">edgesToClassify</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html">duplicated</a></span><span class="op">(</span><span class="va">edgesToClassify</span><span class="op">)</span><span class="op">]</span><span class="op">]</span>
+<span class="va">edgesToClassify</span> <span class="op">&lt;-</span> <span class="va">edgesToClassify</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html">duplicated</a></span><span class="op">(</span><span class="va">edgesToClassify</span><span class="op">)</span><span class="op">]</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
 <span class="va">cvfolds</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getCVfolds.html">getCVfolds</a></span><span class="op">(</span><span class="va">y_cobre</span>, k <span class="op">=</span> <span class="fl">10</span>, repeats <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 <span class="va">trainid</span> <span class="op">&lt;-</span> <span class="va">cvfolds</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">%&gt;%</span>
     <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">k</span> <span class="op">!=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/brainclass.html">brainclass</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X_cobre_filterd</span><span class="op">[</span><span class="va">trainid</span><span class="op">$</span><span class="va">Ind</span>, <span class="op">]</span>, y <span class="op">=</span> <span class="va">y_cobre</span><span class="op">[</span><span class="va">trainid</span><span class="op">$</span><span class="va">Ind</span><span class="op">]</span>, 
-    edgeGrp <span class="op">=</span> <span class="va">keggEdgeGrp</span><span class="op">)</span></code></pre></div>
+<span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/brainclass.html">brainclass</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X_cobre</span><span class="op">[</span><span class="va">trainid</span><span class="op">$</span><span class="va">Ind</span>, <span class="va">edgesToClassify</span><span class="op">]</span>, 
+    y <span class="op">=</span> <span class="va">y_cobre</span><span class="op">[</span><span class="va">trainid</span><span class="op">$</span><span class="va">Ind</span><span class="op">]</span>, edgeGrp <span class="op">=</span> <span class="va">keggEdgeGrp</span><span class="op">)</span></code></pre></div>
 <p>Prediction on the test set</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>testid <span class="ot">&lt;-</span> cvfolds[[<span class="dv">1</span>]] <span class="sc">%&gt;%</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(k <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, <span class="at">X =</span> X_cobre_filterd[testid<span class="sc">$</span>Ind, ], <span class="at">type =</span> <span class="st">"class"</span>)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(test, y_cobre[testid<span class="sc">$</span>Ind])</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>test <span class="dv">0</span> <span class="dv">1</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>   <span class="dv">0</span> <span class="dv">7</span> <span class="dv">0</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>   <span class="dv">1</span> <span class="dv">0</span> <span class="dv">6</span></span></code></pre></div>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, <span class="at">X =</span> X_cobre[testid<span class="sc">$</span>Ind, edgesToClassify], </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"class"</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(test, y_cobre[testid<span class="sc">$</span>Ind])</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>test <span class="dv">0</span> <span class="dv">1</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>   <span class="dv">0</span> <span class="dv">7</span> <span class="dv">0</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>   <span class="dv">1</span> <span class="dv">0</span> <span class="dv">6</span></span></code></pre></div>
 </div>
 </div>
 <div id="post-hoc-interpretation" class="section level1">
@@ -375,13 +376,14 @@
 <h1 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h1>
 <p>Aine, C. J., Bockholt, H. J., Bustillo, J. R., Cañive, J. M., Caprihan, A., Gasparovic, C., … &amp; Calhoun, V. D. (2017). Multimodal neuroimaging in schizophrenia: description and dissemination. <em>Neuroinformatics</em>, 15(4), 343-364.</p>
+<p>Friedman, J., Hastie, T., &amp; Tibshirani, R. (2010). Regularization paths for generalized linear models via coordinate descent. <em>Journal of statistical software</em>, 33(1), 1.</p>
 <p>Hawrylycz, M. J., Lein, E. S., Guillozet-Bongaarts, A. L., Shen, E. H., Ng, L., Miller, J. A., … &amp; Jones, A. R. (2012). An anatomically comprehensive atlas of the adult human brain transcriptome. <em>Nature</em>, 489(7416), 391-399.</p>
 <p>Kim, J., So, S., Lee, H. J., Park, J. C., Kim, J. J., &amp; Lee, H. (2013). DigSee: disease gene search engine with evidence sentences (version cancer). <em>Nucleic acids research</em>, 41(W1), W510-W517.</p>
 <p>Li, M., Kessler, D., Arroyo, J., Freytag, S., Bahlo, M., Levina, E., &amp; Yang, J. Y. H. (2020). Guiding and interpreting brain network classification with transcriptional data. <em>bioRxiv</em>.</p>
 <p>Liberzon, A., Subramanian, A., Pinchback, R., Thorvaldsdóttir, H., Tamayo, P., &amp; Mesirov, J. P. (2011). Molecular signatures database (MSigDB) 3.0. <em>Bioinformatics</em>, 27(12), 1739-1740.</p>
 <p>Power, J. D., Cohen, A. L., Nelson, S. M., Wig, G. S., Barnes, K. A., Church, J. A., … &amp; Petersen, S. E. (2011). Functional network organization of the human brain. <em>Neuron</em>, 72(4), 665-678.</p>
 <p>Relión, J. D. A., Kessler, D., Levina, E., &amp; Taylor, S. F. (2019). Network classification with applications to brain connectomics. <em>The annals of applied statistics</em>, 13(3), 1648.</p>
-<p>Friedman, J., Hastie, T., &amp; Tibshirani, R. (2010). Regularization paths for generalized linear models via coordinate descent. <em>Journal of statistical software</em>, 33(1), 1.</p>
+<p>Zeng, Y., &amp; Breheny, P. (2016). Overlapping group logistic regression with applications to genetic pathway selection. <em>Cancer informatics</em>, 15, CIN-S40043.</p>
 </div>
 <div id="session-information" class="section level1">
 <h1 class="hasAnchor">

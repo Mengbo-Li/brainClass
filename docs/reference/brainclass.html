@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Transcriptional data guided fMRI network classification — brainclass • brainClass</title>
+<title>Transcriptional-data-guided fMRI network classification — brainclass • brainClass</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="Transcriptional data guided fMRI network classification — brainclass" />
+<meta property="og:title" content="Transcriptional-data-guided fMRI network classification — brainclass" />
 <meta property="og:description" content="The `brainclass` function performs fMRI network classification where edges
 in each fMRI network are treated as a long vector and used as features." />
 
@@ -115,7 +115,7 @@ in each fMRI network are treated as a long vector and used as features." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Transcriptional data guided fMRI network classification</h1>
+    <h1>Transcriptional-data-guided fMRI network classification</h1>
     <small class="dont-index">Source: <a href='https://github.com/Mengbo-Li/brainClass/blob/master/R/brainclass.R'><code>R/brainclass.R</code></a></small>
     <div class="hidden name"><code>brainclass.Rd</code></div>
     </div>
@@ -139,8 +139,8 @@ in each fMRI network are treated as a long vector and used as features.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>X</th>
-      <td><p>A matrix with the training samples, in wich each row represents the
-vectorized (by column order) upper triangular part of a network adjacency
+      <td><p>A matrix with the training samples, in which each row represents the
+vectorized upper triangular part (by column order) of the network adjacency
 matrix.</p></td>
     </tr>
     <tr>
@@ -150,8 +150,8 @@ classes by default).</p></td>
     </tr>
     <tr>
       <th>edgeGrp</th>
-      <td><p>A list of vectors, each containing integer indices or
-character names of variables in the group.</p></td>
+      <td><p>Feature groups, in the list format. Each element should
+contain the names of edges belong to each gene set edge group.</p></td>
     </tr>
     <tr>
       <th>family</th>
@@ -172,19 +172,36 @@ Default is 5e-3.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object with S3 class "grpregOverlap".
-See grpregOverlap::`grpregOverlap` for details.</p>
+    <p>An object with S3 class "grpregOverlap". See
+`grpregOverlap::grpregOverlap` for details.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Zeng,Y. and Breheny,P. (2016) Overlapping group logistic regression with
-applications to genetic pathway selection. Cancer Informatics, 15,
+    <p>Li, M., Kessler, D., Arroyo, J., Freytag, S., Bahlo, M., Levina, E., &amp; Yang,
+J. Y. H. (2020). Guiding and interpreting brain network classification with
+transcriptional data. <em>bioRxiv</em>.</p>
+<p>Zeng, Y., &amp; Breheny, P. (2016). Overlapping group logistic regression with
+applications to genetic pathway selection. <em>Cancer informatics</em>, 15,
 CIN-S40043.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## NOT RUN</span>
-<span class='co'># Load a toy data set.</span>
-<span class='co'># data(toyData)</span>
-<span class='co'># res &lt;- brainclass(X = toyData$X, y = toyData$y, edgeGrp = toyData$grpList)</span>
+<span class='co'># ### Obtain data</span>
+<span class='co'># data(ahba)</span>
+<span class='co'># library(graphclass)</span>
+<span class='co'># data(COBRE.data)</span>
+<span class='co'># data(gscv7.0)</span>
+<span class='co'># ### Filter gene sets by size</span>
+<span class='co'># kegg &lt;- filterGeneSets(geneSetList = gscv7.0$kegg,</span>
+<span class='co'># candidateGenes = colnames(ahba), min.size = 5, max.size = Inf)</span>
+<span class='co'># ### Get gene set edge groups</span>
+<span class='co'># keggEdgeGrp &lt;- getGeneSetEdgeGroup(geneExpr = ahba, geneSetList = kegg,</span>
+<span class='co'># cutoff = 0.99)</span>
+<span class='co'># ### Exclude edges not belonging to any feature groups from training</span>
+<span class='co'># edgesToClassify &lt;- unlist(keggEdgeGrp)</span>
+<span class='co'># edgesToClassify &lt;- edgesToClassify[!duplicated(edgesToClassify)]</span>
+<span class='co'># ### Model training</span>
+<span class='co'># train &lt;- brainclass(X = COBRE.data$X.cobre[, edgesToClassify],</span>
+<span class='co'># y = COBRE.data$Y.cobre, edgeGrp = keggEdgeGrp)</span>
 
 </div></pre>
   </div>
