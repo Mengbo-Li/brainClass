@@ -38,7 +38,7 @@ The *brainClass* package uses the **grpregOverlap::grpregOverlap** algorithm for
 
 ## Analysis pipeline
 
-See [**vignettes**]() for the standard workflow with *brainClass*. 
+See [**vignettes**](https://mengbo-li.github.io/brainClass/) for the standard workflow with *brainClass*. 
 
 ## Contact
 
