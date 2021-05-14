@@ -1,3 +1,5 @@
-**brainClass 0.0.1** - April 22, 2020
+# **brainClass 0.1.0**
 
-- Added a `NEWS.md` file to track changes to the package. 
+- Uploaded on May 14, 2021. 
+
+- Added data examples and vignettes. 

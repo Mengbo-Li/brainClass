@@ -1,5 +1,5 @@
 ---
-title: 'brainClass: Transcriptional-data-guided brain network classification'
+title: '*brainClass*: Get started'
 author: "Mengbo Li"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -11,8 +11,7 @@ vignette: >
 ---
 
 ```{r setup, include = FALSE}
-options(width = 100, digits = 3, 
-        rmarkdown.html_vignette.check_title = FALSE)
+options(width = 100, digits = 3)
 knitr::opts_chunk$set(collapse = TRUE, 
                       comment = "#>", 
                       echo = TRUE, 
@@ -27,6 +26,7 @@ knitr::opts_chunk$set(collapse = TRUE,
                       fig.width = 7, 
                       fig.height = 5, 
                       dev = "png")
+options(rmarkdown.html_vignette.check_title = FALSE)
 ```
 
 # Overview
@@ -249,7 +249,7 @@ DescTools::AUC(rocs$fpr, rocs$tpr)
 
 ## Example 2
 
-Next, we evaluate the same selected edges by *glmnet" with the Jaccard index by different GSCs (say, KEGG, REACTOME, transcription factor targets and positional). 
+Next, we evaluate the same selected edges by *glmnet* with the Jaccard index by different GSCs (say, KEGG, REACTOME, transcription factor targets and positional). 
 
 ```{r}
 gscs <- c("kegg", "reactome", "position", "tft")
