@@ -1,11 +1,15 @@
 ---
 title: '*brainClass*: Get started'
-author: "Mengbo Li"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+author: 
+- name: Mengbo Li
+  affiliation: School of Mathematics and Statistics, The University of Sydney, Australia
+output:
+  BiocStyle::html_document:
+    toc_float: true
+package: BiocStyle
 vignette: >
     %\VignetteEngine{knitr::knitr}
-    %\VignetteIndexEntry{Getting started: brainClass}
+    %\VignetteIndexEntry{*brainClass*: Get started}
     %\usepackage[UTF-8]{inputenc}
     %\VignetteEncoding{UTF-8}
 ---
@@ -26,7 +30,6 @@ knitr::opts_chunk$set(collapse = TRUE,
                       fig.width = 7, 
                       fig.height = 5, 
                       dev = "png")
-options(rmarkdown.html_vignette.check_title = FALSE)
 ```
 
 # Overview
@@ -198,7 +201,7 @@ metrics <- posthoc.edge(selected.edgeLabels = selectedEdges,
                         geneSetList = kegg, 
                         geneExpr = ahba, 
                         iter = 100)
-DT::datatable(signif(metrics, 2))
+DT::datatable(signif(metrics, 2), width = "90%", options = list(scrollX = TRUE))
 ```
 
 (3) Association with prior knowledge - the DiGSeE database
