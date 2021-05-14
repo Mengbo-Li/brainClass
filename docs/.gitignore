@@ -1,0 +1,10 @@
+articles
+news
+reference
+404.html
+authors.html
+*.yml
+*.css
+*js
+*svg
+
