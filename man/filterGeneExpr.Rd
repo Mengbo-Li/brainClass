@@ -2,21 +2,21 @@
 % Please edit documentation in R/filterGeneExpr.R
 \name{filterGeneExpr}
 \alias{filterGeneExpr}
-\title{Filter gene expression data by average expression in each region of interest
- (ROI)}
+\title{Filter gene expression data by average expression}
 \usage{
 filterGeneExpr(geneExpr, q = 0.75)
 }
 \arguments{
-\item{geneExpr}{The ROI-by-gene data frame.}
+\item{geneExpr}{The ROI-by-gene data frame or matrix.}
 
 \item{q}{The quantile cutoff.}
 }
 \value{
-Downsized gene expression data frame.
+Downsized gene expression data.
 }
 \description{
-The `filterGeneExpr` function
+The `filterGeneExpr` function applies downsizing on the gene expression data
+by average expression.
 }
 \examples{
 ## NOT RUN

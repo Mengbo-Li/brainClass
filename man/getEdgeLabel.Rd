@@ -4,21 +4,20 @@
 \alias{getEdgeLabel}
 \title{Obtain labels of edges in a network}
 \usage{
-getEdgeLabel(node)
+getEdgeLabel(node, sep = "-")
 }
 \arguments{
 \item{node}{A numeric or character vector, which contains the names of
 all nodes in a network.}
+
+\item{sep}{The seperation pattern. Default is "-".}
 }
 \value{
-A character vector of edge labels for each transcriptional network,
-which can be used as an input of the `getGeneSetEdgeGroup` function. The
-label or the name of an edge is denoted in the format of i-j, where i-j
-denotes an edge that connects node i and node j in the network of interest.
+A character vector of all edge labels for each network.
 }
 \description{
 The `getEdgeLabel` function generates the labels of edges in a network upon
-being supplied names of the nodes in the network.
+names of the nodes in the network.
 }
 \examples{
 getEdgeLabel(c(1:10, 12:20))

@@ -108,6 +108,8 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Mengbo-Li/brainClass">brainClass</a></span><span class="op">)</span>
+<span class="co">## if needed</span>
+<span class="co">## devtools::install_github('jesusdaniel/graphclass')</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">graphclass</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="load-data" class="section level1">
@@ -119,8 +121,9 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"digsee"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"COBRE.data"</span><span class="op">)</span></code></pre></div>
 <ul>
-<li>Gene expression data</li>
+<li>Gene expression data from Allen Human Brain Atlas (AHBA)</li>
 </ul>
+<p>This is an ROI-by-gene data frame, where ROIs (regions of interest) are defined by the Power brain parcellation. The Power parcellation defines 264 brain regions, out of which we are able to map AHBA gene expression samples in to 248 ROIs.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(ahba)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"data.frame"</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(ahba)</span>
@@ -135,6 +138,7 @@
 <ul>
 <li>COBRE fMRI network data</li>
 </ul>
+<p>Note that ROI 75 is missing in COBRE data.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>X_cobre <span class="ot">&lt;-</span> COBRE.data<span class="sc">$</span>X.cobre</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>y_cobre <span class="ot">&lt;-</span> COBRE.data<span class="sc">$</span>Y.cobre</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(X_cobre) <span class="ot">&lt;-</span> <span class="fu">getEdgeLabel</span>(<span class="at">node =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">74</span>, <span class="dv">76</span><span class="sc">:</span><span class="dv">264</span>))</span>
@@ -147,7 +151,7 @@
 <ul>
 <li>Gene set collections (GSCs) from MSigDB v7.0</li>
 </ul>
-<p>Genes are identified by entrez ID. GSCs are unfiltered.</p>
+<p>Genes are identified by entrez ID.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(gscv7<span class="fl">.0</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">8</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(gscv7<span class="fl">.0</span>)</span>
@@ -177,7 +181,7 @@
 <ul>
 <li>DiGSeE scores of GSCs for use in the post-hoc evaluation.</li>
 </ul>
-<p>DiGSeE scores of schizophrenia relevance are constructed for each GSC. GSCs are filtered by size. We kept gene sets with at least 5 genes. Further details on how we obtained these scores are available in the Supplementary methods to the manuscript.</p>
+<p>DiGSeE scores of schizophrenia relevance are constructed for each GSC. GSCs are filtered by size. We keep gene sets with at least 5 genes when deriving DiGSeE scores for the gene sets. Further details on how we obtained these scores are available in the Supplementary methods to the manuscript.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(digsee)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">8</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(digsee)</span>

@@ -1,27 +1,41 @@
-#' Obtain post-hoc interpretability metrics by edges
+#' Obtain the edgewise post-hoc interpretability metrics
 #'
-#' The `posthoc.edge` function calculates the edgewise interpreration metrics on
-#' set of edges selected by the generic network classifier.
+#' The `posthoc.edge` function calculates the edgewise interpretation metrics on
+#' a set of edges selected by a generic network classifier such as
+#' `graphclass::graphclass`.
 #'
-#' @param selected.edgeLabels
+#' @param selected.edgeLabels Lables of edges selected by a generic network
+#' classification algorithm.
 #'
-#' @param all.edgeLabels
+#' @param all.edgeLabels All edges (features) included in the classification to
+#' be evaluated.
 #'
-#' @param geneSetList
+#' @param geneSetList Reference gene set collection. What type of gene sets do
+#' you wish to interpret selected functional edges by?
 #'
-#' @param geneExpr
+#' @param geneExpr Gene expression data, which is represented as a ROI-by-gene
+#' data frame or matrix. ROI stands for region of interest, which corresponds to
+#' each node in the networks of classification.
 #'
-#' @param jaccard.cutoff
+#' @param get.jaccard Logical. Whether to retrun the Jaccard index metrics.
 #'
-#' @param betweenness.cutoff
+#' @param jaccard.cutoff Hard-thresholding cutoff to calculate the Jaccard index
+#' metric. See references for details.
 #'
-#' @param iter
+#' @param get.betweenness Logical. Whether to retrun the edge betweenness
+#' metrics.
+#'
+#' @param betweenness.cutoff Hard-thresholding cutoff to calculate the edge
+#' betweenness metric. See references for details.
+#'
+#' @param iter Number of random draws for constructing the null distribution of
+#' each metric.
 #'
 #' @param adjust.p Logical. Whether or not to return adjusted p-values.
 #'
 #' @param ...
 #'
-#' @return Evalutaion metrics stored in a data frame with four columns.
+#' @return Evalutaion metrics stored in a data frame.
 #'
 #' @references
 #' Li, M., Kessler, D., Arroyo, J., Freytag, S., Bahlo, M., Levina, E., & Yang,
@@ -33,7 +47,21 @@
 #'
 #' @examples
 #' ## NOT RUN
+#' # ## For example, interpretability of glmnet selected edges by KEGG pathways
+#' # data(ahba)
+#' # data(gscv7.0)
+#' # library(graphclass)
+#' # data(COBRE.data)
+#' # X_cobre <- COBRE.data$X.cobre; y_cobre <- COBRE.data$Y.cobre
+#' # colnames(X_cobre) <- getEdgeLabel(node = c(1:74, 76:264))
 #' #
+#' # library(glmnet)
+#' # cvfit <- cv.glmnet(X_cobre, y_cobre, family = "binomial", nfolds = 10)
+#' # selectedEdges <- coef(cvfit, s = "lambda.min")
+#' # selectedEdges <- names(selectedEdges[selectedEdges@i + 1, ])[-1]
+#' # metrics <- posthoc.edge(selected.edgeLabels = selectedEdges,
+#' # all.edgeLabels = colnames(X_cobre), geneSetList = gscv7.0$kegg,
+#' # geneExpr = ahba,iter = 100)
 #'
 #' @export
 posthoc.edge <- function(selected.edgeLabels,

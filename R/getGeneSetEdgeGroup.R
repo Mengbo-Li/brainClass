@@ -1,35 +1,29 @@
-#' Construct gene set edge groups given gene set collection information
+#' Construct gene set edge groups for a gene set collection (GSC) of interest
 #'
-#' The `getGeneSetEdgeGroup` function generates the gene set edge groups to be
-#' used as the feature groups in `brainclass` classification based on each
-#' transcriptional networks from the selected gene set collection.
+#' The `getGeneSetEdgeGroup` function generates the gene set edge groups in
+#' `brainclass` classification.
 #'
-#' @param GeneSetExpr A list of transcriptional data matrices, each
-#' corresponding to a gene set from the gene set collection of interest.
-#' Typically, the output from the `getGeneSetExpr` function.
-#' @param informativeCutoff The cutoff on edge weights in each region-wise
-#' transcriptional network to obtain labels of edges that are the most highly
-#' weighted in each gene set expression network, where the weight of an edge
-#' i-j or (i-j) is defined as the absolute value of the Pearson correlation
-#' coefficient of the gene expression levels of genes in the gene set between
-#' regions i and j (e.g., ROI i and ROI j). The default is set to 0.99.
-#' @param EdgeLabel The vector of edge labels in each transcriptional network in
-#' the list of transcriptional data matrices supplied to GeneSetExpr. This can
-#' be obtained using the `getEdgeLabel` function.
+#' @param geneExpr The ROI-by-gene data frame or matrix. Potentially the output
+#' from the `filterGeneExpr` function.
+#'
+#' @param geneSetList A gene set collection stored in a list. Potentially the
+#' output from the `filterGeneSets` function
+#'
+#' @param cutoff The hard-thresholding cutoff on edge weights.
 #'
 #' @return A list object of vectors, each containing labels of edges that are
-#' the most highly weighted in the corresponding transcriptional network of a
-#' particular gene set, which forms a gene set edge group.
-#' The output of `getGeneSetEdgeGroup` can be used as an input of the
-#' `brainclass` function.
+#' the most highly weighted in the corresponding gene set expression network.
+#' Each item in the returned list represents a gene set edge group. These gene
+#' set edge groups are used as feature groups in `brainclass` classification.
 #'
 #' @examples
 #' ## NOT RUN
-#' # toyGeneSetExpr <- getGeneSetExpr(genExpr = toyData$toyGenExpr, GeneSetList =
-#' # toyData$exampleGSC)
-#' # toyEdgeLabels <- getEdgeLabel(nodeLabel = rownames(toyData$toyGenExpr))
-#' # getGeneSetEdgeGroup(GeneSetExpr = toyGeneSetExpr, informativeCutoff = 0.99,
-#' # EdgeLabel = toyEdgeLabels)
+#' # data(ahba)
+#' # data(gscv7.0)
+#' # ahba <- filterGeneExpr(ahba)
+#' # kegg <- filterGeneSets(geneSetList = gscv7.0$kegg,
+#' # candidateGenes = colnames(ahba), min.size = 5, max.size = Inf)
+#' # keggEdgeGrp <- getGeneSetEdgeGroup(geneExpr = ahba, geneSetList = kegg)
 #'
 #' @export
 getGeneSetEdgeGroup <- function(geneExpr, geneSetList, cutoff = 0.99) {

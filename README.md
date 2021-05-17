@@ -13,7 +13,7 @@ devtools::install_github("Mengbo-Li/brainClass")
 
 ## Data
 
-Processed COBRE and UMich fMRI network data are obtained from the *graphclass* package. See [**graphclass.pdf**](https://github.com/jesusdaniel/graphclass/blob/master/graphclass.pdf) for details and references.
+Processed COBRE and UMich fMRI network data are obtained from the [**graphclass**](https://github.com/jesusdaniel/graphclass) package. See [**graphclass.pdf**](https://github.com/jesusdaniel/graphclass/blob/master/graphclass.pdf) for details and references.
 
 The whole brain gene expression data are publicly available from the Allen Human Brain Atlas ([**AHBA**](http://human.brain-map.org/static/download?rw=t)). Processed AHBA samples are summarised into the region-of-interest (ROI) level, where ROIs are defined by the Power Parcellation. Corrected MNI coordinates of the AHBA wells are obtained from [**chrisgorgo/alleninf**](https://github.com/chrisgorgo/alleninf). 
 
@@ -34,7 +34,7 @@ Relión, J. D. A., Kessler, D., Levina, E., & Taylor, S. F. (2019). Network clas
 
 ## Penalised group lasso algorithms
 
-The *brainClass* package uses the **grpregOverlap::grpregOverlap** algorithm for penalised logistic regression with (user-defined) overlapping feature (covariate) groups. The GitHub page of the *grpregOverlap* package is [**here**](https://github.com/YaohuiZeng/grpregOverlap). 
+The *brainClass* package uses the *grpregOverlap::grpregOverlap* algorithm for penalised logistic regression with (user-defined) overlapping feature (covariate) groups. The GitHub page of the *grpregOverlap* package is [**here**](https://github.com/YaohuiZeng/grpregOverlap). 
 
 ## Analysis pipeline
 

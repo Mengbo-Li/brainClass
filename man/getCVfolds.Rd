@@ -2,7 +2,7 @@
 % Please edit documentation in R/getCVfolds.R
 \name{getCVfolds}
 \alias{getCVfolds}
-\title{Get indices of the observations assigned to each fold for repeated k-fold
+\title{Get indices of observations assigned to each fold for repeated k-fold
 cross-validation}
 \usage{
 getCVfolds(y, k = 10, repeats = 50, type = "random")
@@ -20,18 +20,18 @@ See cvTools::cvFolds for more. The default is "random".}
 }
 \value{
 A list object of data frames, each consisting of two columns, where
-column k gives the fold for each premuted observation; column Ind gives the
-index of the observation. Each data frame element of the returned list can be
-used in a different repeat of k-fold cross-validation.
+column `k` gives the fold for each permuted observation; column `Ind` gives
+the index of each observation. Each data frame element of the returned list
+should be used in a different repeat of k-fold cross-validation.
 }
 \description{
 The `getCVfolds` function splits n observations into k groups in s different
 ways to be used for repeated k-fold cross-validations over s repeats. This
-function is designed for situations where the the response variable is
+function is designed for cases where the the response variable is
 binary.
 }
 \examples{
 ## NOT RUN
-# getCVfolds(toyData$y, k = 3, repeats = 5, type = "random")
+# getCVfolds(sample(c(0, 1), size = 100, replace = T))
 
 }

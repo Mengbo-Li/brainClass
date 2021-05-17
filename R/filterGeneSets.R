@@ -1,4 +1,4 @@
-#' Filter gene sets by size and presence of the gene in the reference gene
+#' Filter gene sets by size and presence of each gene in the reference gene
 #' expression data set
 #'
 #' The `filterGeneSets` function filters gene sets by their sizes, and filters
@@ -13,7 +13,8 @@
 #'
 #' @param max.size Maximum number of genes to keep a gene set.
 #'
-#' @return Filtered list of gene sets given the gene set collection.
+#' @return Filtered list of gene sets. This output can be used to construct gene
+#' set edge groups with the `getGeneSetEdgeGroup` function.
 #'
 #' @examples
 #' ## NOT RUN

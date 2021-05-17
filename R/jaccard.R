@@ -2,10 +2,10 @@
 #'
 #' The `jaccard` function calculates the Jaccard Index of two sets.
 #'
-#' @param x,y Vectors of the same node containing a sequence of non-duplicated
+#' @param x,y Vectors of the same mode containing a sequence of non-duplicated
 #' items.
 #'
-#' @return The Jaccard Index as a numeric.
+#' @return The Jaccard Index as a numeric value.
 #'
 #' @examples
 #' ## NOT RUN

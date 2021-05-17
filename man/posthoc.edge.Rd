@@ -2,7 +2,7 @@
 % Please edit documentation in R/posthoc.edge.R
 \name{posthoc.edge}
 \alias{posthoc.edge}
-\title{Obtain post-hoc interpretability metrics by edges}
+\title{Obtain the edgewise post-hoc interpretability metrics}
 \usage{
 posthoc.edge(
   selected.edgeLabels,
@@ -19,34 +19,62 @@ posthoc.edge(
 )
 }
 \arguments{
-\item{selected.edgeLabels}{}
+\item{selected.edgeLabels}{Lables of edges selected by a generic network
+classification algorithm.}
 
-\item{all.edgeLabels}{}
+\item{all.edgeLabels}{All edges (features) included in the classification to
+be evaluated.}
 
-\item{geneSetList}{}
+\item{geneSetList}{Reference gene set collection. What type of gene sets do
+you wish to interpret selected functional edges by?}
 
-\item{geneExpr}{}
+\item{geneExpr}{Gene expression data, which is represented as a ROI-by-gene
+data frame or matrix. ROI stands for region of interest, which corresponds to
+each node in the networks of classification.}
 
-\item{jaccard.cutoff}{}
+\item{get.jaccard}{Logical. Whether to retrun the Jaccard index metrics.}
 
-\item{betweenness.cutoff}{}
+\item{jaccard.cutoff}{Hard-thresholding cutoff to calculate the Jaccard index
+metric. See references for details.}
 
-\item{iter}{}
+\item{get.betweenness}{Logical. Whether to retrun the edge betweenness
+metrics.}
+
+\item{betweenness.cutoff}{Hard-thresholding cutoff to calculate the edge
+betweenness metric. See references for details.}
+
+\item{iter}{Number of random draws for constructing the null distribution of
+each metric.}
 
 \item{adjust.p}{Logical. Whether or not to return adjusted p-values.}
 
 \item{...}{}
 }
 \value{
-Evalutaion metrics stored in a data frame with four columns.
+Evalutaion metrics stored in a data frame.
 }
 \description{
-The `posthoc.edge` function calculates the edgewise interpreration metrics on
-set of edges selected by the generic network classifier.
+The `posthoc.edge` function calculates the edgewise interpretation metrics on
+a set of edges selected by a generic network classifier such as
+`graphclass::graphclass`.
 }
 \examples{
 ## NOT RUN
+# ## For example, interpretability of glmnet selected edges by KEGG pathways
+# data(ahba)
+# data(gscv7.0)
+# library(graphclass)
+# data(COBRE.data)
+# X_cobre <- COBRE.data$X.cobre; y_cobre <- COBRE.data$Y.cobre
+# colnames(X_cobre) <- getEdgeLabel(node = c(1:74, 76:264))
 #
+# library(glmnet)
+# cvfit <- cv.glmnet(X_cobre, y_cobre, family = "binomial", nfolds = 10)
+# selectedEdges <- coef(cvfit, s = "lambda.min")
+# selectedEdges <- names(selectedEdges[selectedEdges@i + 1, ])[-1]
+# metrics <- posthoc.edge(selected.edgeLabels = selectedEdges,
+# all.edgeLabels = colnames(X_cobre), geneSetList = gscv7.0$kegg,
+# geneExpr = ahba,iter = 100)
 
 }
 \references{

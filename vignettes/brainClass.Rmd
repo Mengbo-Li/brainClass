@@ -49,6 +49,8 @@ devtools::install_github("Mengbo-Li/brainClass")
 ```{r}
 library(tidyverse)
 library(brainClass)
+## if needed
+# devtools::install_github("jesusdaniel/graphclass")
 library(graphclass)
 ```
 
@@ -61,7 +63,9 @@ data("digsee")
 data("COBRE.data")
 ```
 
-- Gene expression data
+- Gene expression data from Allen Human Brain Atlas (AHBA)
+
+This is an ROI-by-gene data frame, where ROIs (regions of interest) are defined by the Power brain parcellation. The Power parcellation defines 264 brain regions, out of which we are able to map AHBA gene expression samples in to 248 ROIs. 
 
 ```{r}
 class(ahba)
@@ -70,6 +74,8 @@ ahba[1:5, 1:10]
 ```
 
 - COBRE fMRI network data
+
+Note that ROI 75 is missing in COBRE data. 
 
 ```{r}
 X_cobre <- COBRE.data$X.cobre
@@ -82,7 +88,7 @@ table(y_cobre)
 
 - Gene set collections (GSCs) from MSigDB v7.0
 
-Genes are identified by entrez ID. GSCs are unfiltered. 
+Genes are identified by entrez ID. 
 
 ```{r}
 length(gscv7.0)
@@ -93,10 +99,7 @@ gscv7.0$kegg[1:3]
 
 - DiGSeE scores of GSCs for use in the post-hoc evaluation. 
 
-DiGSeE scores of schizophrenia relevance are constructed for each GSC. GSCs are 
-filtered by size. We kept gene sets with at least 5 genes. Further details on 
-how we obtained these scores are available in the Supplementary methods to the 
-manuscript. 
+DiGSeE scores of schizophrenia relevance are constructed for each GSC. GSCs are filtered by size. We keep gene sets with at least 5 genes when deriving DiGSeE scores for the gene sets. Further details on how we obtained these scores are available in the Supplementary methods to the manuscript. 
 
 ```{r}
 length(digsee)

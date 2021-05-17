@@ -2,7 +2,7 @@
 % Please edit documentation in R/filterGeneSets.R
 \name{filterGeneSets}
 \alias{filterGeneSets}
-\title{Filter gene sets by size and presence of the gene in the reference gene
+\title{Filter gene sets by size and presence of each gene in the reference gene
 expression data set}
 \usage{
 filterGeneSets(geneSetList, candidateGenes, min.size = 25, max.size = 500)
@@ -18,7 +18,8 @@ than 2.}
 \item{max.size}{Maximum number of genes to keep a gene set.}
 }
 \value{
-Filtered list of gene sets given the gene set collection.
+Filtered list of gene sets. This output can be used to construct gene
+set edge groups with the `getGeneSetEdgeGroup` function.
 }
 \description{
 The `filterGeneSets` function filters gene sets by their sizes, and filters

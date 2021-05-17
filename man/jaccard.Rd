@@ -7,11 +7,11 @@
 jaccard(x, y)
 }
 \arguments{
-\item{x, y}{Vectors of the same node containing a sequence of non-duplicated
+\item{x, y}{Vectors of the same mode containing a sequence of non-duplicated
 items.}
 }
 \value{
-The Jaccard Index as a numeric.
+The Jaccard Index as a numeric value.
 }
 \description{
 The `jaccard` function calculates the Jaccard Index of two sets.

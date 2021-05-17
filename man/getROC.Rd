@@ -2,21 +2,30 @@
 % Please edit documentation in R/getROC.R
 \name{getROC}
 \alias{getROC}
-\title{Obtain receiver operating characteristic (ROC) curve}
+\title{Obtain the receiver operating characteristic (ROC) curve}
 \usage{
 getROC(truth, test.metric, step.size = 0.05)
 }
 \arguments{
-\item{metrics}{The data frame storing}
+\item{truth}{The true class (0 or 1) of each observation, a binary vector.}
+
+\item{test.metric}{The test metric, a numeric vector.}
+
+\item{step.size}{The step size for the ROC curve.}
 }
 \value{
-
+Coordinates on the ROC curve, that is, the false positive rate (fpr)
+and the true positive rate (tpr) values at each step.
 }
 \description{
-The `getROC` function calculates
+The `getROC` function calculates the ROC curve given the test and truth
+values for binary classes. The true class must be binary. The test metric
+should be numeric.
 }
 \examples{
 ## NOT RUN
-# jaccard(1:10, 1:20)
+# res <- getROC(truth = rep(0:1, each = 5), test.metric = c(1:10))
+# ## useful function for calculating the area under the ROC curve:
+# DescTools::AUC(res$tpr, res$fpr)
 
 }
