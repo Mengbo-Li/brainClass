@@ -4,8 +4,4 @@
 .Ruserdata
 ^inst/web$
 ^docs$
-^_pkgdown\.yml$
-^pkgdown$
-^tests/testthat/assets/site-citation$
-^tests/testthat/assets/site-dot-github/.github$
 ^fake-index.html$
