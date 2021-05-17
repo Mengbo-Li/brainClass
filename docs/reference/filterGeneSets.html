@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Filter gene sets by size and presence of the gene in the reference gene
+<title>Filter gene sets by size and presence of each gene in the reference gene
 expression data set — filterGeneSets • brainClass</title>
 
 
@@ -40,7 +40,7 @@ expression data set — filterGeneSets • brainClass</title>
 
 
 
-<meta property="og:title" content="Filter gene sets by size and presence of the gene in the reference gene
+<meta property="og:title" content="Filter gene sets by size and presence of each gene in the reference gene
 expression data set — filterGeneSets" />
 <meta property="og:description" content="The `filterGeneSets` function filters gene sets by their sizes, and filters
 out genes not in the candidate list." />
@@ -117,7 +117,7 @@ out genes not in the candidate list." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Filter gene sets by size and presence of the gene in the reference gene
+    <h1>Filter gene sets by size and presence of each gene in the reference gene
 expression data set</h1>
     <small class="dont-index">Source: <a href='https://github.com/Mengbo-Li/brainClass/blob/master/R/filterGeneSets.R'><code>R/filterGeneSets.R</code></a></small>
     <div class="hidden name"><code>filterGeneSets.Rd</code></div>
@@ -154,7 +154,8 @@ than 2.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Filtered list of gene sets given the gene set collection.</p>
+    <p>Filtered list of gene sets. This output can be used to construct gene
+set edge groups with the `getGeneSetEdgeGroup` function.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## NOT RUN</span>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Obtain receiver operating characteristic (ROC) curve — getROC • brainClass</title>
+<title>Obtain the receiver operating characteristic (ROC) curve — getROC • brainClass</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="Obtain receiver operating characteristic (ROC) curve — getROC" />
-<meta property="og:description" content="The `getROC` function calculates" />
+<meta property="og:title" content="Obtain the receiver operating characteristic (ROC) curve — getROC" />
+<meta property="og:description" content="The `getROC` function calculates the ROC curve given the test and truth
+values for binary classes. The true class must be binary. The test metric
+should be numeric." />
 
 
 
@@ -114,13 +116,15 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Obtain receiver operating characteristic (ROC) curve</h1>
+    <h1>Obtain the receiver operating characteristic (ROC) curve</h1>
     <small class="dont-index">Source: <a href='https://github.com/Mengbo-Li/brainClass/blob/master/R/getROC.R'><code>R/getROC.R</code></a></small>
     <div class="hidden name"><code>getROC.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The `getROC` function calculates</p>
+    <p>The `getROC` function calculates the ROC curve given the test and truth
+values for binary classes. The true class must be binary. The test metric
+should be numeric.</p>
     </div>
 
     <pre class="usage"><span class='fu'>getROC</span><span class='op'>(</span><span class='va'>truth</span>, <span class='va'>test.metric</span>, step.size <span class='op'>=</span> <span class='fl'>0.05</span><span class='op'>)</span></pre>
@@ -129,20 +133,29 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>metrics</th>
-      <td><p>The data frame storing</p></td>
+      <th>truth</th>
+      <td><p>The true class (0 or 1) of each observation, a binary vector.</p></td>
+    </tr>
+    <tr>
+      <th>test.metric</th>
+      <td><p>The test metric, a numeric vector.</p></td>
+    </tr>
+    <tr>
+      <th>step.size</th>
+      <td><p>The step size for the ROC curve.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-
-
+    <p>Coordinates on the ROC curve, that is, the false positive rate (fpr)
+and the true positive rate (tpr) values at each step.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## NOT RUN</span>
-<span class='co'># jaccard(1:10, 1:20)</span>
+<span class='co'># res &lt;- getROC(truth = rep(0:1, each = 5), test.metric = c(1:10))</span>
+<span class='co'># ## useful function for calculating the area under the ROC curve:</span>
+<span class='co'># DescTools::AUC(res$tpr, res$fpr)</span>
 
 </div></pre>
   </div>

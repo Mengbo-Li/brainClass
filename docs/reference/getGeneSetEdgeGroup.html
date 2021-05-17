@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Construct gene set edge groups given gene set collection information — getGeneSetEdgeGroup • brainClass</title>
+<title>Construct gene set edge groups for a gene set collection (GSC) of interest — getGeneSetEdgeGroup • brainClass</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,9 @@
 
 
 
-<meta property="og:title" content="Construct gene set edge groups given gene set collection information — getGeneSetEdgeGroup" />
-<meta property="og:description" content="The `getGeneSetEdgeGroup` function generates the gene set edge groups to be
-used as the feature groups in `brainclass` classification based on each
-transcriptional networks from the selected gene set collection." />
+<meta property="og:title" content="Construct gene set edge groups for a gene set collection (GSC) of interest — getGeneSetEdgeGroup" />
+<meta property="og:description" content="The `getGeneSetEdgeGroup` function generates the gene set edge groups in
+`brainclass` classification." />
 
 
 
@@ -116,15 +115,14 @@ transcriptional networks from the selected gene set collection." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Construct gene set edge groups given gene set collection information</h1>
+    <h1>Construct gene set edge groups for a gene set collection (GSC) of interest</h1>
     <small class="dont-index">Source: <a href='https://github.com/Mengbo-Li/brainClass/blob/master/R/getGeneSetEdgeGroup.R'><code>R/getGeneSetEdgeGroup.R</code></a></small>
     <div class="hidden name"><code>getGeneSetEdgeGroup.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The `getGeneSetEdgeGroup` function generates the gene set edge groups to be
-used as the feature groups in `brainclass` classification based on each
-transcriptional networks from the selected gene set collection.</p>
+    <p>The `getGeneSetEdgeGroup` function generates the gene set edge groups in
+`brainclass` classification.</p>
     </div>
 
     <pre class="usage"><span class='fu'>getGeneSetEdgeGroup</span><span class='op'>(</span><span class='va'>geneExpr</span>, <span class='va'>geneSetList</span>, cutoff <span class='op'>=</span> <span class='fl'>0.99</span><span class='op'>)</span></pre>
@@ -133,43 +131,36 @@ transcriptional networks from the selected gene set collection.</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>GeneSetExpr</th>
-      <td><p>A list of transcriptional data matrices, each
-corresponding to a gene set from the gene set collection of interest.
-Typically, the output from the `getGeneSetExpr` function.</p></td>
+      <th>geneExpr</th>
+      <td><p>The ROI-by-gene data frame or matrix. Potentially the output
+from the `filterGeneExpr` function.</p></td>
     </tr>
     <tr>
-      <th>informativeCutoff</th>
-      <td><p>The cutoff on edge weights in each region-wise
-transcriptional network to obtain labels of edges that are the most highly
-weighted in each gene set expression network, where the weight of an edge
-i-j or (i-j) is defined as the absolute value of the Pearson correlation
-coefficient of the gene expression levels of genes in the gene set between
-regions i and j (e.g., ROI i and ROI j). The default is set to 0.99.</p></td>
+      <th>geneSetList</th>
+      <td><p>A gene set collection stored in a list. Potentially the
+output from the `filterGeneSets` function</p></td>
     </tr>
     <tr>
-      <th>EdgeLabel</th>
-      <td><p>The vector of edge labels in each transcriptional network in
-the list of transcriptional data matrices supplied to GeneSetExpr. This can
-be obtained using the `getEdgeLabel` function.</p></td>
+      <th>cutoff</th>
+      <td><p>The hard-thresholding cutoff on edge weights.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A list object of vectors, each containing labels of edges that are
-the most highly weighted in the corresponding transcriptional network of a
-particular gene set, which forms a gene set edge group.
-The output of `getGeneSetEdgeGroup` can be used as an input of the
-`brainclass` function.</p>
+the most highly weighted in the corresponding gene set expression network.
+Each item in the returned list represents a gene set edge group. These gene
+set edge groups are used as feature groups in `brainclass` classification.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## NOT RUN</span>
-<span class='co'># toyGeneSetExpr &lt;- getGeneSetExpr(genExpr = toyData$toyGenExpr, GeneSetList =</span>
-<span class='co'># toyData$exampleGSC)</span>
-<span class='co'># toyEdgeLabels &lt;- getEdgeLabel(nodeLabel = rownames(toyData$toyGenExpr))</span>
-<span class='co'># getGeneSetEdgeGroup(GeneSetExpr = toyGeneSetExpr, informativeCutoff = 0.99,</span>
-<span class='co'># EdgeLabel = toyEdgeLabels)</span>
+<span class='co'># data(ahba)</span>
+<span class='co'># data(gscv7.0)</span>
+<span class='co'># ahba &lt;- filterGeneExpr(ahba)</span>
+<span class='co'># kegg &lt;- filterGeneSets(geneSetList = gscv7.0$kegg,</span>
+<span class='co'># candidateGenes = colnames(ahba), min.size = 5, max.size = Inf)</span>
+<span class='co'># keggEdgeGrp &lt;- getGeneSetEdgeGroup(geneExpr = ahba, geneSetList = kegg)</span>
 
 </div></pre>
   </div>

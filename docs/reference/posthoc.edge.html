@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Obtain post-hoc interpretability metrics by edges — posthoc.edge • brainClass</title>
+<title>Obtain the edgewise post-hoc interpretability metrics — posthoc.edge • brainClass</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,10 @@
 
 
 
-<meta property="og:title" content="Obtain post-hoc interpretability metrics by edges — posthoc.edge" />
-<meta property="og:description" content="The `posthoc.edge` function calculates the edgewise interpreration metrics on
-set of edges selected by the generic network classifier." />
+<meta property="og:title" content="Obtain the edgewise post-hoc interpretability metrics — posthoc.edge" />
+<meta property="og:description" content="The `posthoc.edge` function calculates the edgewise interpretation metrics on
+a set of edges selected by a generic network classifier such as
+`graphclass::graphclass`." />
 
 
 
@@ -115,14 +116,15 @@ set of edges selected by the generic network classifier." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Obtain post-hoc interpretability metrics by edges</h1>
+    <h1>Obtain the edgewise post-hoc interpretability metrics</h1>
     <small class="dont-index">Source: <a href='https://github.com/Mengbo-Li/brainClass/blob/master/R/posthoc.edge.R'><code>R/posthoc.edge.R</code></a></small>
     <div class="hidden name"><code>posthoc.edge.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The `posthoc.edge` function calculates the edgewise interpreration metrics on
-set of edges selected by the generic network classifier.</p>
+    <p>The `posthoc.edge` function calculates the edgewise interpretation metrics on
+a set of edges selected by a generic network classifier such as
+`graphclass::graphclass`.</p>
     </div>
 
     <pre class="usage"><span class='fu'>posthoc.edge</span><span class='op'>(</span>
@@ -144,31 +146,48 @@ set of edges selected by the generic network classifier.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>selected.edgeLabels</th>
-      <td></td>
+      <td><p>Lables of edges selected by a generic network
+classification algorithm.</p></td>
     </tr>
     <tr>
       <th>all.edgeLabels</th>
-      <td></td>
+      <td><p>All edges (features) included in the classification to
+be evaluated.</p></td>
     </tr>
     <tr>
       <th>geneSetList</th>
-      <td></td>
+      <td><p>Reference gene set collection. What type of gene sets do
+you wish to interpret selected functional edges by?</p></td>
     </tr>
     <tr>
       <th>geneExpr</th>
-      <td></td>
+      <td><p>Gene expression data, which is represented as a ROI-by-gene
+data frame or matrix. ROI stands for region of interest, which corresponds to
+each node in the networks of classification.</p></td>
+    </tr>
+    <tr>
+      <th>get.jaccard</th>
+      <td><p>Logical. Whether to retrun the Jaccard index metrics.</p></td>
     </tr>
     <tr>
       <th>jaccard.cutoff</th>
-      <td></td>
+      <td><p>Hard-thresholding cutoff to calculate the Jaccard index
+metric. See references for details.</p></td>
+    </tr>
+    <tr>
+      <th>get.betweenness</th>
+      <td><p>Logical. Whether to retrun the edge betweenness
+metrics.</p></td>
     </tr>
     <tr>
       <th>betweenness.cutoff</th>
-      <td></td>
+      <td><p>Hard-thresholding cutoff to calculate the edge
+betweenness metric. See references for details.</p></td>
     </tr>
     <tr>
       <th>iter</th>
-      <td></td>
+      <td><p>Number of random draws for constructing the null distribution of
+each metric.</p></td>
     </tr>
     <tr>
       <th>adjust.p</th>
@@ -182,7 +201,7 @@ set of edges selected by the generic network classifier.</p>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Evalutaion metrics stored in a data frame with four columns.</p>
+    <p>Evalutaion metrics stored in a data frame.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Li, M., Kessler, D., Arroyo, J., Freytag, S., Bahlo, M., Levina, E., &amp; Yang,
@@ -193,7 +212,21 @@ network research. *InterJournal, complex systems*, 1695(5), 1-9.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## NOT RUN</span>
+<span class='co'># ## For example, interpretability of glmnet selected edges by KEGG pathways</span>
+<span class='co'># data(ahba)</span>
+<span class='co'># data(gscv7.0)</span>
+<span class='co'># library(graphclass)</span>
+<span class='co'># data(COBRE.data)</span>
+<span class='co'># X_cobre &lt;- COBRE.data$X.cobre; y_cobre &lt;- COBRE.data$Y.cobre</span>
+<span class='co'># colnames(X_cobre) &lt;- getEdgeLabel(node = c(1:74, 76:264))</span>
 <span class='co'>#</span>
+<span class='co'># library(glmnet)</span>
+<span class='co'># cvfit &lt;- cv.glmnet(X_cobre, y_cobre, family = "binomial", nfolds = 10)</span>
+<span class='co'># selectedEdges &lt;- coef(cvfit, s = "lambda.min")</span>
+<span class='co'># selectedEdges &lt;- names(selectedEdges[selectedEdges@i + 1, ])[-1]</span>
+<span class='co'># metrics &lt;- posthoc.edge(selected.edgeLabels = selectedEdges,</span>
+<span class='co'># all.edgeLabels = colnames(X_cobre), geneSetList = gscv7.0$kegg,</span>
+<span class='co'># geneExpr = ahba,iter = 100)</span>
 
 </div></pre>
   </div>
