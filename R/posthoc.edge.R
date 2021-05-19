@@ -17,16 +17,16 @@
 #' data frame or matrix. ROI stands for region of interest, which corresponds to
 #' each node in the networks of classification.
 #'
-#' @param get.jaccard Logical. Whether to retrun the Jaccard index metrics.
+#' @param get.jaccard Logical. Whether to return the Jaccard index metrics.
 #'
 #' @param jaccard.cutoff Hard-thresholding cutoff to calculate the Jaccard index
 #' metric. See references for details.
 #'
-#' @param get.betweenness Logical. Whether to retrun the edge betweenness
-#' metrics.
+#' @param get.betweenness Logical. Whether to return the edge betweenness
+#' centrality metrics.
 #'
 #' @param betweenness.cutoff Hard-thresholding cutoff to calculate the edge
-#' betweenness metric. See references for details.
+#' betweenness centrality metric. See references for details.
 #'
 #' @param iter Number of random draws for constructing the null distribution of
 #' each metric.

@@ -32,16 +32,16 @@ you wish to interpret selected functional edges by?}
 data frame or matrix. ROI stands for region of interest, which corresponds to
 each node in the networks of classification.}
 
-\item{get.jaccard}{Logical. Whether to retrun the Jaccard index metrics.}
+\item{get.jaccard}{Logical. Whether to return the Jaccard index metrics.}
 
 \item{jaccard.cutoff}{Hard-thresholding cutoff to calculate the Jaccard index
 metric. See references for details.}
 
-\item{get.betweenness}{Logical. Whether to retrun the edge betweenness
-metrics.}
+\item{get.betweenness}{Logical. Whether to return the edge betweenness
+centrality metrics.}
 
 \item{betweenness.cutoff}{Hard-thresholding cutoff to calculate the edge
-betweenness metric. See references for details.}
+betweenness centrality metric. See references for details.}
 
 \item{iter}{Number of random draws for constructing the null distribution of
 each metric.}
@@ -80,8 +80,8 @@ a set of edges selected by a generic network classifier such as
 \references{
 Li, M., Kessler, D., Arroyo, J., Freytag, S., Bahlo, M., Levina, E., & Yang,
 J. Y. H. (2020). Guiding and interpreting brain network classification with
-transcriptional data. *bioRxiv*.
+transcriptional data. \emph{bioRxiv}.
 
 Csardi, G., & Nepusz, T. (2006). The igraph software package for complex
-network research. *InterJournal, complex systems*, 1695(5), 1-9.
+network research. \emph{InterJournal, complex systems}, 1695(5), 1-9.
 }

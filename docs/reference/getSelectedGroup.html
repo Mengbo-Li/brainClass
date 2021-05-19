@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • brainClass</title>
+<title>Identify feature groups where all fitted coefficients are non-zero. — getSelectedGroup • brainClass</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,9 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Identify feature groups where all fitted coefficients are non-zero. — getSelectedGroup" />
+<meta property="og:description" content="The `getSelectedGroup` function extracts names of the features groups where
+all edges have non-zero fitted coefficients." />
 
 
 
@@ -58,7 +60,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -111,117 +113,38 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Identify feature groups where all fitted coefficients are non-zero.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/Mengbo-Li/brainClass/blob/master/R/getSelectedGroup.R'><code>R/getSelectedGroup.R</code></a></small>
+    <div class="hidden name"><code>getSelectedGroup.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>The `getSelectedGroup` function extracts names of the features groups where
+all edges have non-zero fitted coefficients.</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>getSelectedGroup</span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="ahba.html">ahba</a></code> </p>
-        </td>
-        <td><p>Processed Allen Human Brain Atlas (AHBA) data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="brainclass.html">brainclass()</a></code> </p>
-        </td>
-        <td><p>Transcriptional-data-guided fMRI network classification</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="digsee.html">digsee</a></code> </p>
-        </td>
-        <td><p>Processed DiGSeE scores of relevance to schizophrenia of each gene set
-signature</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="filterGeneExpr.html">filterGeneExpr()</a></code> </p>
-        </td>
-        <td><p>Filter gene expression data by average expression</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="filterGeneSets.html">filterGeneSets()</a></code> </p>
-        </td>
-        <td><p>Filter gene sets by size and presence of each gene in the reference gene
-expression data set</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="getCVfolds.html">getCVfolds()</a></code> </p>
-        </td>
-        <td><p>Get indices of observations assigned to each fold for repeated k-fold
-cross-validation</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="getEdgeLabel.html">getEdgeLabel()</a></code> </p>
-        </td>
-        <td><p>Obtain labels of edges in a network</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="getGeneSetEdgeGroup.html">getGeneSetEdgeGroup()</a></code> </p>
-        </td>
-        <td><p>Construct gene set edge groups for a gene set collection (GSC) of interest</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="getROC.html">getROC()</a></code> </p>
-        </td>
-        <td><p>Obtain the receiver operating characteristic (ROC) curve</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="getSelectedGroup.html">getSelectedGroup()</a></code> </p>
-        </td>
-        <td><p>Identify feature groups where all fitted coefficients are non-zero.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="gscv7.0.html">gscv7.0</a></code> </p>
-        </td>
-        <td><p>Gene set collections downloaded from MSigDB v7.0</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="jaccard.html">jaccard()</a></code> </p>
-        </td>
-        <td><p>Calculate Jaccard Index of two sets</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="posthoc.edge.html">posthoc.edge()</a></code> </p>
-        </td>
-        <td><p>Obtain the edgewise post-hoc interpretability metrics</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>fit</th>
+      <td><p>The `brainclass` fit.</p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A character vector. Names of edge groups where all fitted
+coefficients are non-zero.</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>For the data example, see <a href='brainclass.html'>brainclass</a>.</p>
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>

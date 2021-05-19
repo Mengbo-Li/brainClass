@@ -173,6 +173,13 @@ table(test, y_cobre[testid$Ind])
 ```
 
 
+Selected gene set edge groups: 
+
+```{r}
+getSelectedGroup(fit)
+```
+
+
 
 # Post-hoc Interpretation
 

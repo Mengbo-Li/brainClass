@@ -60,6 +60,7 @@ in each fMRI network are treated as a long vector and used as features.
 # ### Model training
 # train <- brainclass(X = COBRE.data$X.cobre[, edgesToClassify],
 # y = COBRE.data$Y.cobre, edgeGrp = keggEdgeGrp)
+# selectedEdgeGrps <- getSelectedGroup(train)
 
 }
 \references{

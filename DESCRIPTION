@@ -25,7 +25,7 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.6)
-Imports: grpregOverlap, cvTools, stringr, stats
+Imports: grpregOverlap, cvTools, stats, Matrix
 Suggests: knitr, tidyverse, markdown
 biocViews: Software, Classification, GeneExpression, Transcriptomics,
     NetworkInference, Network, Regression

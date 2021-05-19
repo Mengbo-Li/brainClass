@@ -39,6 +39,7 @@
 #' # ### Model training
 #' # train <- brainclass(X = COBRE.data$X.cobre[, edgesToClassify],
 #' # y = COBRE.data$Y.cobre, edgeGrp = keggEdgeGrp)
+#' # selectedEdgeGrps <- getSelectedGroup(train)
 #'
 #' @references
 #' Li, M., Kessler, D., Arroyo, J., Freytag, S., Bahlo, M., Levina, E., & Yang,
@@ -62,6 +63,7 @@ brainclass <- function(X,
                                                group = edgeGrp,
                                                lambda = lambda,
                                                penalty = penalty,
-                                               family = family)
+                                               family = family,
+                                               returnOverlap = TRUE)
    return(GS_grpLasso)
 }

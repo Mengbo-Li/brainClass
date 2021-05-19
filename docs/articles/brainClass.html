@@ -256,6 +256,11 @@
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>test <span class="dv">0</span> <span class="dv">1</span></span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>   <span class="dv">0</span> <span class="dv">7</span> <span class="dv">0</span></span>
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>   <span class="dv">1</span> <span class="dv">0</span> <span class="dv">6</span></span></code></pre></div>
+<p>Selected gene set edge groups:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getSelectedGroup</span>(fit)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"KEGG_GLYCOLYSIS_GLUCONEOGENESIS"</span> <span class="st">"KEGG_CITRATE_CYCLE_TCA_CYCLE"</span>   </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>] <span class="st">"KEGG_PURINE_METABOLISM"</span>          <span class="st">"KEGG_ETHER_LIPID_METABOLISM"</span>    </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">5</span>] <span class="st">"KEGG_RIBOSOME"</span>                   <span class="st">"KEGG_SPLICEOSOME"</span>               </span></code></pre></div>
 </div>
 </div>
 <div id="post-hoc-interpretation" class="section level1">
@@ -270,19 +275,19 @@
 </li>
 </ol>
 <p>Obtain the edge labels of selected features, that is, edges with a non-zero fitted coefficient.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.package('glmnet')</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>cvfit <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(X_cobre, y_cobre, <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">nfolds =</span> <span class="dv">10</span>)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>selectedEdges <span class="ot">&lt;-</span> <span class="fu">coef</span>(cvfit, <span class="at">s =</span> <span class="st">"lambda.min"</span>)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>selectedEdges <span class="ot">&lt;-</span> <span class="fu">names</span>(selectedEdges[selectedEdges<span class="sc">@</span>i <span class="sc">+</span> <span class="dv">1</span>, ])[<span class="sc">-</span><span class="dv">1</span>]</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(selectedEdges)</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">86</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.package('glmnet')</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>cvfit <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(X_cobre, y_cobre, <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">nfolds =</span> <span class="dv">10</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>selectedEdges <span class="ot">&lt;-</span> <span class="fu">coef</span>(cvfit, <span class="at">s =</span> <span class="st">"lambda.min"</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>selectedEdges <span class="ot">&lt;-</span> <span class="fu">names</span>(selectedEdges[selectedEdges<span class="sc">@</span>i <span class="sc">+</span> <span class="dv">1</span>, ])[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(selectedEdges)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">86</span></span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Obtain edgewise metrics</li>
 </ol>
 <p>Evaluate by KEGG pathways:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">metrics</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/posthoc.edge.html">posthoc.edge</a></span><span class="op">(</span>selected.edgeLabels <span class="op">=</span> <span class="va">selectedEdges</span>, 
     all.edgeLabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">X_cobre</span><span class="op">)</span>, geneSetList <span class="op">=</span> <span class="va">kegg</span>, geneExpr <span class="op">=</span> <span class="va">ahba</span>, 
     iter <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
@@ -292,50 +297,50 @@
 <li>Association with prior knowledge - the DiGSeE database</li>
 </ol>
 <p>Get “truth” - KEGG pathways with a top 5% in both average and sum DiGSeE scores are assumed to be associated with schizophrenia.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>metrics <span class="ot">&lt;-</span> <span class="fu">merge</span>(metrics, digsee[[<span class="st">"kegg"</span>]], <span class="at">by =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">truth =</span> ((avgScore <span class="sc">&gt;=</span> <span class="fu">quantile</span>(avgScore, <span class="fl">0.95</span>)) <span class="sc">+</span> </span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>        (sumScore <span class="sc">&gt;=</span> <span class="fu">quantile</span>(sumScore, <span class="fl">0.95</span>)) <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">+</span> <span class="dv">0</span>)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(metrics<span class="sc">$</span>truth)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span>   <span class="dv">1</span> </span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="dv">137</span>  <span class="dv">12</span> </span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>metrics<span class="sc">$</span>Row.names[metrics<span class="sc">$</span>truth <span class="sc">==</span> <span class="dv">1</span>]</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="st">"KEGG_ALZHEIMERS_DISEASE"</span>                      <span class="st">"KEGG_AMYOTROPHIC_LATERAL_SCLEROSIS_ALS"</span>      </span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a> [<span class="dv">3</span>] <span class="st">"KEGG_ARGININE_AND_PROLINE_METABOLISM"</span>         <span class="st">"KEGG_CALCIUM_SIGNALING_PATHWAY"</span>              </span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a> [<span class="dv">5</span>] <span class="st">"KEGG_HUNTINGTONS_DISEASE"</span>                     <span class="st">"KEGG_LINOLEIC_ACID_METABOLISM"</span>               </span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a> [<span class="dv">7</span>] <span class="st">"KEGG_LONG_TERM_POTENTIATION"</span>                  <span class="st">"KEGG_MAPK_SIGNALING_PATHWAY"</span>                 </span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a> [<span class="dv">9</span>] <span class="st">"KEGG_NEUROACTIVE_LIGAND_RECEPTOR_INTERACTION"</span> <span class="st">"KEGG_PATHWAYS_IN_CANCER"</span>                     </span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>[<span class="dv">11</span>] <span class="st">"KEGG_PRION_DISEASES"</span>                          <span class="st">"KEGG_TRYPTOPHAN_METABOLISM"</span>                  </span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>metrics <span class="ot">&lt;-</span> <span class="fu">merge</span>(metrics, digsee[[<span class="st">"kegg"</span>]], <span class="at">by =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">truth =</span> ((avgScore <span class="sc">&gt;=</span> <span class="fu">quantile</span>(avgScore, <span class="fl">0.95</span>)) <span class="sc">+</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>        (sumScore <span class="sc">&gt;=</span> <span class="fu">quantile</span>(sumScore, <span class="fl">0.95</span>)) <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">+</span> <span class="dv">0</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(metrics<span class="sc">$</span>truth)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span>   <span class="dv">1</span> </span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="dv">137</span>  <span class="dv">12</span> </span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>metrics<span class="sc">$</span>Row.names[metrics<span class="sc">$</span>truth <span class="sc">==</span> <span class="dv">1</span>]</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="st">"KEGG_ALZHEIMERS_DISEASE"</span>                      <span class="st">"KEGG_AMYOTROPHIC_LATERAL_SCLEROSIS_ALS"</span>      </span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a> [<span class="dv">3</span>] <span class="st">"KEGG_ARGININE_AND_PROLINE_METABOLISM"</span>         <span class="st">"KEGG_CALCIUM_SIGNALING_PATHWAY"</span>              </span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a> [<span class="dv">5</span>] <span class="st">"KEGG_HUNTINGTONS_DISEASE"</span>                     <span class="st">"KEGG_LINOLEIC_ACID_METABOLISM"</span>               </span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a> [<span class="dv">7</span>] <span class="st">"KEGG_LONG_TERM_POTENTIATION"</span>                  <span class="st">"KEGG_MAPK_SIGNALING_PATHWAY"</span>                 </span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a> [<span class="dv">9</span>] <span class="st">"KEGG_NEUROACTIVE_LIGAND_RECEPTOR_INTERACTION"</span> <span class="st">"KEGG_PATHWAYS_IN_CANCER"</span>                     </span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>[<span class="dv">11</span>] <span class="st">"KEGG_PRION_DISEASES"</span>                          <span class="st">"KEGG_TRYPTOPHAN_METABOLISM"</span>                  </span></code></pre></div>
 <p>Generate the receiver operating characteristic (ROC) curve for each metric:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rocs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getROC.html">getROC</a></span><span class="op">(</span>truth <span class="op">=</span> <span class="va">metrics</span><span class="op">$</span><span class="va">truth</span>, test.metric <span class="op">=</span> <span class="va">metrics</span><span class="op">$</span><span class="va">Jaccard</span>, 
     step.size <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span>
 
 <span class="fu">ggplot</span><span class="op">(</span><span class="va">rocs</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">fpr</span>, y <span class="op">=</span> <span class="va">tpr</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_abline</span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">1</span>, 
     intercept <span class="op">=</span> <span class="fl">0</span>, color <span class="op">=</span> <span class="st">"darkred"</span>, linetype <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"FPR"</span>, 
     y <span class="op">=</span> <span class="st">"TPR"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="brainClass_files/figure-html/unnamed-chunk-17-1.png" width="672"></p>
+<p><img src="brainClass_files/figure-html/unnamed-chunk-18-1.png" width="672"></p>
 <p>Also, calculate the area under this ROC curve (AUC):</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>DescTools<span class="sc">::</span><span class="fu">AUC</span>(rocs<span class="sc">$</span>fpr, rocs<span class="sc">$</span>tpr)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.609</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>DescTools<span class="sc">::</span><span class="fu">AUC</span>(rocs<span class="sc">$</span>fpr, rocs<span class="sc">$</span>tpr)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.609</span></span></code></pre></div>
 <p>Notice that, with p-valued metrics, signigicance is indicated by smaller values. We thereby need the “one-minus” transformation when calcuating the ROC curve:</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rocs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getROC.html">getROC</a></span><span class="op">(</span>truth <span class="op">=</span> <span class="va">metrics</span><span class="op">$</span><span class="va">truth</span>, test.metric <span class="op">=</span> <span class="fl">1</span> <span class="op">-</span> <span class="va">metrics</span><span class="op">$</span><span class="va">Jaccard.PValue</span>, 
     step.size <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span>
 
 <span class="fu">ggplot</span><span class="op">(</span><span class="va">rocs</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">fpr</span>, y <span class="op">=</span> <span class="va">tpr</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_abline</span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">1</span>, 
     intercept <span class="op">=</span> <span class="fl">0</span>, color <span class="op">=</span> <span class="st">"darkred"</span>, linetype <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"FPR"</span>, 
     y <span class="op">=</span> <span class="st">"TPR"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="brainClass_files/figure-html/unnamed-chunk-19-1.png" width="672"></p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>DescTools<span class="sc">::</span><span class="fu">AUC</span>(rocs<span class="sc">$</span>fpr, rocs<span class="sc">$</span>tpr)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.509</span></span></code></pre></div>
+<p><img src="brainClass_files/figure-html/unnamed-chunk-20-1.png" width="672"></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>DescTools<span class="sc">::</span><span class="fu">AUC</span>(rocs<span class="sc">$</span>fpr, rocs<span class="sc">$</span>tpr)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.509</span></span></code></pre></div>
 </div>
 <div id="example-2" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example-2" class="anchor"></a>Example 2</h2>
 <p>Next, we evaluate the same selected edges by <em>glmnet</em> with the Jaccard index by different GSCs (say, KEGG, REACTOME, transcription factor targets and positional).</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gscs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"kegg"</span>, <span class="st">"reactome"</span>, <span class="st">"position"</span>, <span class="st">"tft"</span><span class="op">)</span>
 <span class="va">rocs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">gscs</span>, <span class="kw">function</span><span class="op">(</span><span class="va">ind</span><span class="op">)</span> <span class="op">{</span>
     <span class="co"># filter the gene sets by size</span>
@@ -358,22 +363,22 @@
 <span class="op">}</span><span class="op">)</span> <span class="op">%&gt;%</span>
     <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">.</span><span class="op">)</span></code></pre></div>
 <p>Visualisation:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">rocs</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">fpr</span>, y <span class="op">=</span> <span class="va">tpr</span>, color <span class="op">=</span> <span class="va">gsc</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu">geom_abline</span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">1</span>, intercept <span class="op">=</span> <span class="fl">0</span>, color <span class="op">=</span> <span class="st">"darkred"</span>, 
         linetype <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"FPR"</span>, y <span class="op">=</span> <span class="st">"TPR"</span>, color <span class="op">=</span> <span class="st">"GSC"</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"ROC curves by Jaccard Index"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="brainClass_files/figure-html/unnamed-chunk-21-1.png" width="672"></p>
+<p><img src="brainClass_files/figure-html/unnamed-chunk-22-1.png" width="672"></p>
 <p>AUCs:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">group_by</span>(rocs, gsc) <span class="sc">%&gt;%</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">auc =</span> DescTools<span class="sc">::</span><span class="fu">AUC</span>(fpr, tpr))</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 4 x 2</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  gsc        auc</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>    <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> kegg     <span class="fl">0.609</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> position <span class="fl">0.609</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> reactome <span class="fl">0.637</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> tft      <span class="fl">0.531</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">group_by</span>(rocs, gsc) <span class="sc">%&gt;%</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">auc =</span> DescTools<span class="sc">::</span><span class="fu">AUC</span>(fpr, tpr))</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 4 x 2</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  gsc        auc</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>    <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> kegg     <span class="fl">0.609</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> position <span class="fl">0.609</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> reactome <span class="fl">0.637</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> tft      <span class="fl">0.531</span></span></code></pre></div>
 </div>
 </div>
 <div id="references" class="section level1">
@@ -392,53 +397,53 @@
 <div id="session-information" class="section level1">
 <h1 class="hasAnchor">
 <a href="#session-information" class="anchor"></a>Session Information</h1>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>R version <span class="dv">4</span>.<span class="fl">0.5</span> (<span class="dv">2021-03-31</span>)</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>Platform<span class="sc">:</span> x86_64<span class="sc">-</span>apple<span class="sc">-</span><span class="fu">darwin17.0</span> (<span class="dv">64</span><span class="sc">-</span>bit)</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>Running under<span class="sc">:</span> macOS Catalina <span class="dv">10</span>.<span class="fl">15.7</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>Matrix products<span class="sc">:</span> default</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>BLAS<span class="sc">:</span>   <span class="er">/</span>System<span class="sc">/</span>Library<span class="sc">/</span>Frameworks<span class="sc">/</span>Accelerate.framework<span class="sc">/</span>Versions<span class="sc">/</span>A<span class="sc">/</span>Frameworks<span class="sc">/</span>vecLib.framework<span class="sc">/</span>Versions<span class="sc">/</span>A<span class="sc">/</span>libBLAS.dylib</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>LAPACK<span class="sc">:</span> <span class="er">/</span>Library<span class="sc">/</span>Frameworks<span class="sc">/</span>R.framework<span class="sc">/</span>Versions<span class="sc">/</span><span class="fl">4.0</span><span class="sc">/</span>Resources<span class="sc">/</span>lib<span class="sc">/</span>libRlapack.dylib</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>locale<span class="sc">:</span></span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] en_AU.UTF<span class="dv">-8</span><span class="sc">/</span>en_AU.UTF<span class="dv">-8</span><span class="sc">/</span>en_AU.UTF<span class="dv">-8</span><span class="sc">/</span>C<span class="sc">/</span>en_AU.UTF<span class="dv">-8</span><span class="sc">/</span>en_AU.UTF<span class="dv">-8</span></span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>attached base packages<span class="sc">:</span></span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] stats     graphics  grDevices utils     datasets  methods   base     </span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>other attached packages<span class="sc">:</span></span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] igraph_1.<span class="fl">2.6</span>      DescTools_0.<span class="fl">99.41</span> glmnet_4<span class="fl">.1</span><span class="dv">-1</span>      Matrix_1<span class="fl">.3</span><span class="dv">-3</span>      graphclass_1<span class="fl">.1</span>   </span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a> [<span class="dv">6</span>] brainClass_0.<span class="fl">1.0</span>  forcats_0.<span class="fl">5.1</span>     stringr_1.<span class="fl">4.0</span>     dplyr_1.<span class="fl">0.6</span>       purrr_0.<span class="fl">3.4</span>      </span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>[<span class="dv">11</span>] readr_1.<span class="fl">4.0</span>       tidyr_1.<span class="fl">1.3</span>       tibble_3.<span class="fl">1.1</span>      ggplot2_3.<span class="fl">3.3</span>     tidyverse_1.<span class="fl">3.1</span>  </span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>[<span class="dv">16</span>] BiocStyle_2.<span class="fl">18.1</span> </span>
-<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>loaded via a <span class="fu">namespace</span> (and not attached)<span class="sc">:</span></span>
-<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] colorspace_2<span class="fl">.0</span><span class="dv">-1</span>    ellipsis_0.<span class="fl">3.2</span>      class_7<span class="fl">.3</span><span class="dv">-19</span>        rprojroot_2.<span class="fl">0.2</span>    </span>
-<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a> [<span class="dv">5</span>] fs_1.<span class="fl">5.0</span>            gld_2.<span class="fl">6.2</span>           rstudioapi_0<span class="fl">.13</span>     proxy_0<span class="fl">.4</span><span class="dv">-25</span>       </span>
-<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a> [<span class="dv">9</span>] farver_2.<span class="fl">1.0</span>        cvTools_0.<span class="fl">3.2</span>       DT_0<span class="fl">.18</span>             fansi_0.<span class="fl">4.2</span>        </span>
-<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>[<span class="dv">13</span>] mvtnorm_1<span class="fl">.1</span><span class="dv">-1</span>       lubridate_1.<span class="fl">7.10</span>    xml2_1.<span class="fl">3.2</span>          codetools_0<span class="fl">.2</span><span class="dv">-18</span>   </span>
-<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>[<span class="dv">17</span>] splines_4.<span class="fl">0.5</span>       cachem_1.<span class="fl">0.4</span>        rootSolve_1.<span class="dv">8</span>.<span class="fl">2.1</span>   robustbase_0<span class="fl">.93</span><span class="dv">-7</span>  </span>
-<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>[<span class="dv">21</span>] knitr_1<span class="fl">.33</span>          jsonlite_1.<span class="fl">7.2</span>      broom_0.<span class="fl">7.6</span>         dbplyr_2.<span class="fl">1.1</span>       </span>
-<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>[<span class="dv">25</span>] grpregOverlap_2<span class="fl">.2</span><span class="dv">-0</span> BiocManager_1.<span class="fl">30.15</span> compiler_4.<span class="fl">0.5</span>      httr_1.<span class="fl">4.2</span>         </span>
-<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>[<span class="dv">29</span>] backports_1.<span class="fl">2.1</span>     assertthat_0.<span class="fl">2.1</span>    fastmap_1.<span class="fl">1.0</span>       cli_2.<span class="fl">5.0</span>          </span>
-<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>[<span class="dv">33</span>] formatR_1<span class="fl">.9</span>         htmltools_0.<span class="dv">5</span>.<span class="fl">1.1</span>   tools_4.<span class="fl">0.5</span>         gtable_0.<span class="fl">3.0</span>       </span>
-<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>[<span class="dv">37</span>] glue_1.<span class="fl">4.2</span>          lmom_2<span class="fl">.8</span>            Rcpp_1.<span class="fl">0.6</span>          cellranger_1.<span class="fl">1.0</span>   </span>
-<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a>[<span class="dv">41</span>] jquerylib_0.<span class="fl">1.4</span>     pkgdown_1.<span class="fl">6.1</span>       vctrs_0.<span class="fl">3.8</span>         iterators_1.<span class="fl">0.13</span>   </span>
-<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a>[<span class="dv">45</span>] crosstalk_1.<span class="fl">1.1</span>     grpreg_3.<span class="fl">3.1</span>        xfun_0<span class="fl">.22</span>           rbibutils_2.<span class="fl">1.1</span>    </span>
-<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a>[<span class="dv">49</span>] rvest_1.<span class="fl">0.0</span>         lifecycle_1.<span class="fl">0.0</span>     DEoptimR_1<span class="fl">.0</span><span class="dv">-8</span>      MASS_7<span class="fl">.3</span><span class="dv">-54</span>        </span>
-<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a>[<span class="dv">53</span>] scales_1.<span class="fl">1.1</span>        ragg_1.<span class="fl">1.2</span>          hms_1.<span class="fl">0.0</span>           expm_0<span class="fl">.999</span><span class="dv">-6</span>       </span>
-<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a>[<span class="dv">57</span>] yaml_2.<span class="fl">2.1</span>          Exact_2<span class="fl">.1</span>           memoise_2.<span class="fl">0.0</span>       sass_0.<span class="fl">4.0</span>         </span>
-<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a>[<span class="dv">61</span>] stringi_1.<span class="fl">6.1</span>       highr_0<span class="fl">.9</span>           desc_1.<span class="fl">3.0</span>          foreach_1.<span class="fl">5.1</span>      </span>
-<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a>[<span class="dv">65</span>] e1071_1<span class="fl">.7</span><span class="dv">-6</span>         boot_1<span class="fl">.3</span><span class="dv">-28</span>         shape_1.<span class="fl">4.5</span>         Rdpack_2.<span class="fl">1.1</span>       </span>
-<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a>[<span class="dv">69</span>] rlang_0.<span class="fl">4.11</span>        pkgconfig_2.<span class="fl">0.3</span>     systemfonts_1.<span class="fl">0.2</span>   evaluate_0<span class="fl">.14</span>      </span>
-<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a>[<span class="dv">73</span>] lattice_0<span class="fl">.20</span><span class="dv">-44</span>     htmlwidgets_1.<span class="fl">5.3</span>   labeling_0.<span class="fl">4.2</span>      tidyselect_1.<span class="fl">1.1</span>   </span>
-<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a>[<span class="dv">77</span>] magrittr_2.<span class="fl">0.1</span>      bookdown_0<span class="fl">.22</span>       R6_2.<span class="fl">5.0</span>            generics_0.<span class="fl">1.0</span>     </span>
-<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a>[<span class="dv">81</span>] DBI_1.<span class="fl">1.1</span>           pillar_1.<span class="fl">6.0</span>        haven_2.<span class="fl">4.1</span>         withr_2.<span class="fl">4.2</span>        </span>
-<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a>[<span class="dv">85</span>] survival_3<span class="fl">.2</span><span class="dv">-11</span>     modelr_0.<span class="fl">1.8</span>        crayon_1.<span class="fl">4.1</span>        utf8_1.<span class="fl">2.1</span>         </span>
-<span id="cb24-45"><a href="#cb24-45" aria-hidden="true" tabindex="-1"></a>[<span class="dv">89</span>] rmarkdown_2<span class="fl">.8</span>       grid_4.<span class="fl">0.5</span>          readxl_1.<span class="fl">3.1</span>        data.table_1.<span class="fl">14.0</span>  </span>
-<span id="cb24-46"><a href="#cb24-46" aria-hidden="true" tabindex="-1"></a>[<span class="dv">93</span>] reprex_2.<span class="fl">0.0</span>        digest_0.<span class="fl">6.27</span>       textshaping_0.<span class="fl">3.4</span>   munsell_0.<span class="fl">5.0</span>      </span>
-<span id="cb24-47"><a href="#cb24-47" aria-hidden="true" tabindex="-1"></a>[<span class="dv">97</span>] bslib_0.<span class="fl">2.5</span>        </span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>R version <span class="dv">4</span>.<span class="fl">0.5</span> (<span class="dv">2021-03-31</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>Platform<span class="sc">:</span> x86_64<span class="sc">-</span>apple<span class="sc">-</span><span class="fu">darwin17.0</span> (<span class="dv">64</span><span class="sc">-</span>bit)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>Running under<span class="sc">:</span> macOS Catalina <span class="dv">10</span>.<span class="fl">15.7</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>Matrix products<span class="sc">:</span> default</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>BLAS<span class="sc">:</span>   <span class="er">/</span>System<span class="sc">/</span>Library<span class="sc">/</span>Frameworks<span class="sc">/</span>Accelerate.framework<span class="sc">/</span>Versions<span class="sc">/</span>A<span class="sc">/</span>Frameworks<span class="sc">/</span>vecLib.framework<span class="sc">/</span>Versions<span class="sc">/</span>A<span class="sc">/</span>libBLAS.dylib</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>LAPACK<span class="sc">:</span> <span class="er">/</span>Library<span class="sc">/</span>Frameworks<span class="sc">/</span>R.framework<span class="sc">/</span>Versions<span class="sc">/</span><span class="fl">4.0</span><span class="sc">/</span>Resources<span class="sc">/</span>lib<span class="sc">/</span>libRlapack.dylib</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>locale<span class="sc">:</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] en_AU.UTF<span class="dv">-8</span><span class="sc">/</span>en_AU.UTF<span class="dv">-8</span><span class="sc">/</span>en_AU.UTF<span class="dv">-8</span><span class="sc">/</span>C<span class="sc">/</span>en_AU.UTF<span class="dv">-8</span><span class="sc">/</span>en_AU.UTF<span class="dv">-8</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>attached base packages<span class="sc">:</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] stats     graphics  grDevices utils     datasets  methods   base     </span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>other attached packages<span class="sc">:</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] igraph_1.<span class="fl">2.6</span>      DescTools_0.<span class="fl">99.41</span> glmnet_4<span class="fl">.1</span><span class="dv">-1</span>      Matrix_1<span class="fl">.3</span><span class="dv">-3</span>      graphclass_1<span class="fl">.1</span>   </span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a> [<span class="dv">6</span>] brainClass_0.<span class="fl">1.0</span>  forcats_0.<span class="fl">5.1</span>     stringr_1.<span class="fl">4.0</span>     dplyr_1.<span class="fl">0.6</span>       purrr_0.<span class="fl">3.4</span>      </span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>[<span class="dv">11</span>] readr_1.<span class="fl">4.0</span>       tidyr_1.<span class="fl">1.3</span>       tibble_3.<span class="fl">1.1</span>      ggplot2_3.<span class="fl">3.3</span>     tidyverse_1.<span class="fl">3.1</span>  </span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>[<span class="dv">16</span>] BiocStyle_2.<span class="fl">18.1</span> </span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>loaded via a <span class="fu">namespace</span> (and not attached)<span class="sc">:</span></span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] colorspace_2<span class="fl">.0</span><span class="dv">-1</span>    ellipsis_0.<span class="fl">3.2</span>      class_7<span class="fl">.3</span><span class="dv">-19</span>        rprojroot_2.<span class="fl">0.2</span>    </span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a> [<span class="dv">5</span>] fs_1.<span class="fl">5.0</span>            gld_2.<span class="fl">6.2</span>           rstudioapi_0<span class="fl">.13</span>     proxy_0<span class="fl">.4</span><span class="dv">-25</span>       </span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a> [<span class="dv">9</span>] farver_2.<span class="fl">1.0</span>        cvTools_0.<span class="fl">3.2</span>       DT_0<span class="fl">.18</span>             fansi_0.<span class="fl">4.2</span>        </span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>[<span class="dv">13</span>] mvtnorm_1<span class="fl">.1</span><span class="dv">-1</span>       lubridate_1.<span class="fl">7.10</span>    xml2_1.<span class="fl">3.2</span>          codetools_0<span class="fl">.2</span><span class="dv">-18</span>   </span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>[<span class="dv">17</span>] splines_4.<span class="fl">0.5</span>       cachem_1.<span class="fl">0.4</span>        rootSolve_1.<span class="dv">8</span>.<span class="fl">2.1</span>   robustbase_0<span class="fl">.93</span><span class="dv">-7</span>  </span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>[<span class="dv">21</span>] knitr_1<span class="fl">.33</span>          jsonlite_1.<span class="fl">7.2</span>      broom_0.<span class="fl">7.6</span>         dbplyr_2.<span class="fl">1.1</span>       </span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>[<span class="dv">25</span>] grpregOverlap_2<span class="fl">.2</span><span class="dv">-0</span> BiocManager_1.<span class="fl">30.15</span> compiler_4.<span class="fl">0.5</span>      httr_1.<span class="fl">4.2</span>         </span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>[<span class="dv">29</span>] backports_1.<span class="fl">2.1</span>     assertthat_0.<span class="fl">2.1</span>    fastmap_1.<span class="fl">1.0</span>       cli_2.<span class="fl">5.0</span>          </span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>[<span class="dv">33</span>] formatR_1<span class="fl">.9</span>         htmltools_0.<span class="dv">5</span>.<span class="fl">1.1</span>   tools_4.<span class="fl">0.5</span>         gtable_0.<span class="fl">3.0</span>       </span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>[<span class="dv">37</span>] glue_1.<span class="fl">4.2</span>          lmom_2<span class="fl">.8</span>            Rcpp_1.<span class="fl">0.6</span>          cellranger_1.<span class="fl">1.0</span>   </span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a>[<span class="dv">41</span>] jquerylib_0.<span class="fl">1.4</span>     pkgdown_1.<span class="fl">6.1</span>       vctrs_0.<span class="fl">3.8</span>         iterators_1.<span class="fl">0.13</span>   </span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>[<span class="dv">45</span>] crosstalk_1.<span class="fl">1.1</span>     grpreg_3.<span class="fl">3.1</span>        xfun_0<span class="fl">.22</span>           rbibutils_2.<span class="fl">1.1</span>    </span>
+<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>[<span class="dv">49</span>] rvest_1.<span class="fl">0.0</span>         lifecycle_1.<span class="fl">0.0</span>     DEoptimR_1<span class="fl">.0</span><span class="dv">-8</span>      MASS_7<span class="fl">.3</span><span class="dv">-54</span>        </span>
+<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a>[<span class="dv">53</span>] scales_1.<span class="fl">1.1</span>        ragg_1.<span class="fl">1.2</span>          hms_1.<span class="fl">0.0</span>           expm_0<span class="fl">.999</span><span class="dv">-6</span>       </span>
+<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a>[<span class="dv">57</span>] yaml_2.<span class="fl">2.1</span>          Exact_2<span class="fl">.1</span>           memoise_2.<span class="fl">0.0</span>       sass_0.<span class="fl">4.0</span>         </span>
+<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a>[<span class="dv">61</span>] stringi_1.<span class="fl">6.1</span>       highr_0<span class="fl">.9</span>           desc_1.<span class="fl">3.0</span>          foreach_1.<span class="fl">5.1</span>      </span>
+<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a>[<span class="dv">65</span>] e1071_1<span class="fl">.7</span><span class="dv">-6</span>         boot_1<span class="fl">.3</span><span class="dv">-28</span>         shape_1.<span class="fl">4.5</span>         Rdpack_2.<span class="fl">1.1</span>       </span>
+<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a>[<span class="dv">69</span>] rlang_0.<span class="fl">4.11</span>        pkgconfig_2.<span class="fl">0.3</span>     systemfonts_1.<span class="fl">0.2</span>   evaluate_0<span class="fl">.14</span>      </span>
+<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a>[<span class="dv">73</span>] lattice_0<span class="fl">.20</span><span class="dv">-44</span>     htmlwidgets_1.<span class="fl">5.3</span>   labeling_0.<span class="fl">4.2</span>      tidyselect_1.<span class="fl">1.1</span>   </span>
+<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a>[<span class="dv">77</span>] magrittr_2.<span class="fl">0.1</span>      bookdown_0<span class="fl">.22</span>       R6_2.<span class="fl">5.0</span>            generics_0.<span class="fl">1.0</span>     </span>
+<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a>[<span class="dv">81</span>] DBI_1.<span class="fl">1.1</span>           pillar_1.<span class="fl">6.0</span>        haven_2.<span class="fl">4.1</span>         withr_2.<span class="fl">4.2</span>        </span>
+<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a>[<span class="dv">85</span>] survival_3<span class="fl">.2</span><span class="dv">-11</span>     modelr_0.<span class="fl">1.8</span>        crayon_1.<span class="fl">4.1</span>        utf8_1.<span class="fl">2.1</span>         </span>
+<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a>[<span class="dv">89</span>] rmarkdown_2<span class="fl">.8</span>       grid_4.<span class="fl">0.5</span>          readxl_1.<span class="fl">3.1</span>        data.table_1.<span class="fl">14.0</span>  </span>
+<span id="cb25-46"><a href="#cb25-46" aria-hidden="true" tabindex="-1"></a>[<span class="dv">93</span>] reprex_2.<span class="fl">0.0</span>        digest_0.<span class="fl">6.27</span>       textshaping_0.<span class="fl">3.4</span>   munsell_0.<span class="fl">5.0</span>      </span>
+<span id="cb25-47"><a href="#cb25-47" aria-hidden="true" tabindex="-1"></a>[<span class="dv">97</span>] bslib_0.<span class="fl">2.5</span>        </span></code></pre></div>
 </div>
   </div>
 
