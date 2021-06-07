@@ -134,7 +134,7 @@ kegg <- filterGeneSets(geneSetList = gscv7.0$kegg, candidateGenes = colnames(ahb
 summary(sapply(kegg, length))
 ```
 
-If one wishes to keep all gene sets from the GSC, set `min.size` to 2 and `max.size` to Inf. The `min.size` parameter cannot be smaller than 2 in order to calculate correlations. Note that, it is still necessary to filter out genes that do not have gene expression information in the reference transcriptional data set, which is the (filtered) AHBA dataset. 
+If one wishes to keep all gene sets from the GSC, set `min.size` to 2 and `max.size` to Inf. The `min.size` parameter cannot be smaller than 2 in order to calculate correlations. Note that, it is still necessary to filter out genes that do not have gene expression information in the reference transcriptional data set, which is the (filtered) AHBA data set. 
 
 ```{r, eval = FALSE}
 # Not run 
@@ -185,7 +185,7 @@ getSelectedGroup(fit)
 
 ## Example 1
 
-First, as an example, we evaluate the edge selection results by *glmnet::glmnet* applied on the COBRE data set by differnt metrics with KEGG pathways. 
+First, as an example, we evaluate the edge selection results by *glmnet::glmnet* applied on the COBRE data set by different metrics with KEGG pathways. 
 
 (1) Edge selection results by *glmnet*
 

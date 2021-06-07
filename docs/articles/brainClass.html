@@ -220,7 +220,7 @@
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">sapply</span>(kegg, length))</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>      <span class="dv">5</span>       <span class="dv">9</span>      <span class="dv">15</span>      <span class="dv">21</span>      <span class="dv">27</span>     <span class="dv">109</span> </span></code></pre></div>
-<p>If one wishes to keep all gene sets from the GSC, set <code>min.size</code> to 2 and <code>max.size</code> to Inf. The <code>min.size</code> parameter cannot be smaller than 2 in order to calculate correlations. Note that, it is still necessary to filter out genes that do not have gene expression information in the reference transcriptional data set, which is the (filtered) AHBA dataset.</p>
+<p>If one wishes to keep all gene sets from the GSC, set <code>min.size</code> to 2 and <code>max.size</code> to Inf. The <code>min.size</code> parameter cannot be smaller than 2 in order to calculate correlations. Note that, it is still necessary to filter out genes that do not have gene expression information in the reference transcriptional data set, which is the (filtered) AHBA data set.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Not run</span>
 <span class="va">kegg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filterGeneSets.html">filterGeneSets</a></span><span class="op">(</span>geneSetList <span class="op">=</span> <span class="va">gscv7.0</span><span class="op">$</span><span class="va">kegg</span>, candidateGenes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">ahba</span><span class="op">)</span>, 
@@ -269,7 +269,7 @@
 <div id="example-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example-1" class="anchor"></a>Example 1</h2>
-<p>First, as an example, we evaluate the edge selection results by <em>glmnet::glmnet</em> applied on the COBRE data set by differnt metrics with KEGG pathways.</p>
+<p>First, as an example, we evaluate the edge selection results by <em>glmnet::glmnet</em> applied on the COBRE data set by different metrics with KEGG pathways.</p>
 <ol style="list-style-type: decimal">
 <li>Edge selection results by <em>glmnet</em>
 </li>
