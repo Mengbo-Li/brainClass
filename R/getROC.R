@@ -26,7 +26,8 @@ getROC <- function(truth,
    do.call(rbind, lapply(seq(0, 1, step.size), function(step) {
       binarised <- data.frame(truth = truth,
                               test = (test.metric >= quantile(test.metric,
-                                                              probs = step))+0)
+                                                              probs = step,
+                                                              na.rm = TRUE))+0)
       roc <- data.frame(tpr = table(binarised)["1", "1"]/
                            sum(table(binarised)["1", ]),
                         fpr = table(binarised)["0", "1"]/
