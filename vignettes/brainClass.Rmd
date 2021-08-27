@@ -65,7 +65,7 @@ data("COBRE.data")
 
 - Gene expression data from Allen Human Brain Atlas (AHBA)
 
-This is an ROI-by-gene data frame, where ROIs (regions of interest) are defined by the Power brain parcellation. The Power parcellation defines 264 brain regions, out of which we are able to map AHBA gene expression samples in to 248 ROIs. 
+This is an ROI-by-gene data frame, where ROIs (regions of interest) are defined by the Power brain parcellation. The Power parcellation defines 264 brain regions, out of which we are able to map AHBA gene expression samples into 248 ROIs. 
 
 ```{r}
 class(ahba)
@@ -126,7 +126,7 @@ dim(ahba)
 
 2) Get a gene set collection (GSC) of interest and filter by gene set sizes 
 
-The filtering on GSC by gene set sizes is optional by recommended. 
+The filtering on GSC by gene set sizes is optional but recommended. 
 
 ```{r}
 kegg <- filterGeneSets(geneSetList = gscv7.0$kegg, candidateGenes = colnames(ahba), 
@@ -152,7 +152,7 @@ keggEdgeGrp <- getGeneSetEdgeGroup(geneExpr = ahba, geneSetList = kegg, cutoff =
 
 ## Network classification and prediction
 
-Take one fold from one repeat of 10-fold cross validation as an example: 
+Let's test one fold from a 10-fold cross-validation as an example: 
 
 ```{r}
 edgesToClassify <- unlist(keggEdgeGrp)
@@ -216,7 +216,7 @@ DT::datatable(signif(metrics, 2), width = "90%", options = list(scrollX = TRUE))
 
 (3) Association with prior knowledge - the DiGSeE database
 
-Get "truth" - KEGG pathways with a top 5% in both average and sum DiGSeE scores are assumed to be associated with schizophrenia. 
+Get the "truth" - KEGG pathways with a top 5% in both average and sum DiGSeE scores are assumed to be associated with schizophrenia. 
 
 ```{r}
 metrics <- merge(metrics, digsee[["kegg"]], by = 0) %>% 
@@ -244,7 +244,7 @@ Also, calculate the area under this ROC curve (AUC):
 DescTools::AUC(rocs$fpr, rocs$tpr)
 ```
 
-Notice that, with p-valued metrics, signigicance is indicated by smaller values. We thereby need the "one-minus" transformation when calcuating the ROC curve: 
+Notice that, with p-valued metrics, significance is indicated by smaller values. We thereby need the "one-minus" transformation when calculating the ROC curve: 
 
 ```{r}
 rocs <- getROC(truth = metrics$truth, test.metric = 1-metrics$Jaccard.PValue, step.size = 0.01)
