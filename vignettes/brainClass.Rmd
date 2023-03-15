@@ -6,7 +6,6 @@ author:
 output:
   BiocStyle::html_document:
     toc_float: true
-package: BiocStyle
 vignette: >
     %\VignetteEngine{knitr::knitr}
     %\VignetteIndexEntry{*brainClass*: Get started}
